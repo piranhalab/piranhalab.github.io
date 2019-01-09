@@ -1,0 +1,306 @@
+<!DOCTAYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+<style>
+
+  * {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 14px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  background-color: #B4B4B4;
+}
+
+#myUL {
+    list-style-type: none;
+    width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #121212;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #B4B4b4;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #121212;
+}
+
+
+
+body {
+    background-color: #121212;
+    font-family: 'Montserrat';font-size: 16px;
+}
+
+.w3-container {
+    color: #B4B4B4;
+    background-color: #121212;
+    font-family: 'Montserrat';font-size: 16px;
+}
+
+.w3-container h2{
+    color: #FF96FF;
+    font-family: 'Montserrat';font-size: 30px;
+}
+
+.w3-container h1{
+    color: #B4B4B4;
+    font-family: 'Montserrat';font-size: 40px;
+}
+
+
+.navbar {
+  overflow: hidden;
+  background-color: #121212;
+  font-family: 'Montserrat';font-size: 18px;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: #B4B4B4;
+  text-align: center;
+  padding: 0px 0px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: #141414;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: #blue;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #B4B4B4;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+</style>
+
+<body>
+ 
+<div class="navbar">
+  <!--<a href="#home">Home</a>-->
+  <div class="dropdown">
+    <button class="dropbtn"><a href="index.html">PiranhaLab</a> 
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="index.html#Nosotrxs">Nosotrxs</a>
+      <!--<a href="index.html#Colaboradorxs">Colaboradorxs</a>-->
+      <a href="index.html#Contacto">Contacto</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn"><a href="proyectos.html">Proyectos</a> 
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="proyectos.html#CCD-PADID">Talleres CCD-PADID</a>
+      <a href="proyectos.html#Orbit">Orbit</a>
+      <a href="proyectos.html#ofhawc#">ofhawc</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn"><a href="eventos.html">Eventos</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="eventos.html#Proximos">Próximos</a>
+      <a href="eventos.html#Pasados">Pasados</a>
+    </div>
+  </div>
+  
+  <div class="dropdown">
+    <button class="dropbtn"><a href="media.html">Media</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+    </div>
+  </div>
+  
+  <div class="dropdown">
+    <button class="dropbtn"><a href="comunidad.html">Comunidad</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <!--<a href="#">Próximos</a>-->
+    </div>
+  </div>
+  
+<!--  <div class="dropdown">
+    <button class="dropbtn"><a href="comunidad.html">English</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Próximos</a>
+    </div>
+  </div> -->
+
+  <!--<a href="#home">Home</a>-->
+
+</div>
+
+<div class="w3-content" style="max-width:800px;margin-top:46px">
+
+  <!-- Header -->
+  <header class="w3-container w3-center w3-padding-64" id="Inicio">
+      <img class="w3-image" src="img/piranha-lab-fb-cover-v2.png" alt="Hamburger Catering">
+    <h1 class="w3-xxlarge"></h1>
+    <h6></h6>
+  </header>
+
+<!--<section class="w3-container w3-left w3-padding-32" style="max-width:1300px" id="Inicio">-->
+  
+  <section class="w3-container w3-center w3-padding-32">
+    <h1 class="">Comunidad</h1>
+  </section>
+
+  <section class="w3-container w3-left w3-padding-32 w3-justify">
+    <h2 class="w3-wide"></h2>
+    <p>Ligas que conducen a herramientas, escritos, tutoriales y grupos. Recursos preferentemente elegidos en español. El cuadro de búsqueda permite filtrar enlaces de acuerdo a palabras clave. El acervo está en constante construcción y modifica su orden cada vez que el sitio se refresca.</p>
+  </section>
+  
+    <div align="center">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar" title="Type in a name">
+
+<ul id="myUL">
+  <li><a href="https://rggtrn.github.io">RGGTRN. Música, videos y algorítmos para bailar.</a></li>
+  <li><a href="https://toplap.org/">Toplap. Organización transnacional de live coding.</a></li>
+  <li><a href="https://github.com/ojack/hydra">Hydra. Live coding  y visuales en el explorador.</a></li>
+  <li><a href="http://europia.org/cac6/CAC-Pdf/31-CAC6_paper_25.pdf">Hernani Villaseñor. Escribir código fuente para generar música y sonido: una experiencia de enseñanza de la música por computadora en México.</a></li>
+  <li><a href="https://github.com/essteban/CineVivo">CineVivo. Live coding con videos y cámaras.</a></li>
+  <li><a href="https://iclc.livecodenetwork.org/2017/cameraReady/Navarro_Cacharpo%20co-performing%20cumbia%20sonidera%20with%20deep%20abstraction_ICLC2017.pdf">Luis Navarro del Ángel y David Ogborn. Cacharpo: co-performing cumbia sonidera with deep abstractions.</a></li>
+  <li><a href="https://github.com/nanc-in-a-can/canon-generator">Nanc-in-a-can Canon Generator. Creación y visualización de cánones temporales a'la Conlon Nancarrow.</a></li>
+  <li><a href="https://github.com/josecaos/caosbox">CaosBox. Secuenciador/procesador gráfico no común para 'caosperclib' escrito en SuperCollider</a></li>
+  <li><a href="https://github.com/furenku/INSTRUMENT">INSTRUMENT. Sistema pensado para músicos o bandas que quieran integrar herramientas electrónicas a sus actos en vivo.</a></li>
+  <li><a href="https://github.com/josrr/mc-wolf3d">mc-wolf3d. Máquina simple para videojuegos basada en Ray Casting.</a></li>
+  <li><a href="https://dj.dancecult.net/index.php/dancecult/article/view/1066/962">RGGTRN. Saborítmico: A Report From the Dance Floor in Mexico.</a></li>
+  <li><a href="http://iclc.livecodenetwork.org/2019/papers/paper91.pdf">Diego Villaseñor Cortina y Alejandro Franco Briones. Nanc-in-a-Can Canon Generator. SuperCollider code capable of generating and visualizing temporal canons critically and algorithmically</a></li>
+  <!--<li><a href="#">Vacío</a></li>-->
+</ul>
+    </div>
+
+    <script>
+
+      var ul = document.querySelector('ul');
+      for (var i = ul.children.length; i >= 0; i--) {
+	  ul.appendChild(ul.children[Math.random() * i | 0]);
+      }
+      
+    </script>
+    
+    <script>
+      function myFunction() {
+	  var input, filter, ul, li, a, i;
+	  input = document.getElementById("myInput");
+	  filter = input.value.toUpperCase();
+	  ul = document.getElementById("myUL");
+	  li = ul.getElementsByTagName("li");
+	  for (i = 0; i < li.length; i++) {
+              a = li[i].getElementsByTagName("a")[0];
+              if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+		  li[i].style.display = "";
+              } else {
+		  li[i].style.display = "none";
+              }
+    }
+}
+</script>
+
+<!--
+<section class="w3-row-padding w3-left w3-white w3-padding-8" id="Software">
+    <h3 class="w3-wide">Software</h3>
+  <article class="w3-third w3-center">
+    <p>Orbit</p>
+    <img src="img_bandmember.jpg" alt="" style="width:100%">
+    <p>John is the smartest.</p>
+  </article>
+  <article class="w3-third">
+    <p>PiranhaLib</p>
+    <img src="img_bandmember.jpg" alt="" style="width:100%">
+    <p>Paul is the prettiest.</p>
+ <!-- </article>
+  <article class="w3-third">
+    <p>Ringo</p>
+    <img src="img_bandmember.jpg" alt="" style="width:100%">
+    <p>Ringo is the funniest.</p>
+  </article> 
+</section>
+
+-->
+
+<!-- Container (Contact Section) -->
+
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-center w3-xxlarge w3-margin-top">
+  <a href="https://www.facebook.com/piranhalab/"><i class="fa fa-facebook-official"></i></a>
+  <a href="#"><i class="fa fa-twitter"></i></a>
+  <a href="#"><i class="fa fa-github"></i></a>
+  <a href="#"><i class="fa fa-instagram"></i></a>
+  <a href="#"><i class="fa fa-vimeo"></i></a>
+  <a href="mailto:piranha.laboratorio@gmail.com"><i class="fa fa-envelope"></i></a>
+  <p class="w3-large"><*(((-{</p>
+</footer>
+
+</body>
+</html>

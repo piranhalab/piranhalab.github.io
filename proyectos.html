@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
+<style>
+
+body {
+    background-color: #121212;
+    font-family: 'Montserrat';font-size: 16px;
+}
+
+.w3-container {
+    color: #B4B4B4;
+    background-color: #121212;
+    font-family: 'Montserrat';font-size: 16px;
+}
+
+.w3-container h2{
+    color: #FF96FF;
+    font-family: 'Montserrat';font-size: 30px;
+}
+
+.w3-container h1{
+    color: #B4B4B4;
+    font-family: 'Montserrat';font-size: 40px;
+}
+
+
+.navbar {
+  overflow: hidden;
+  background-color: #121212;
+  font-family: 'Montserrat';font-size: 18px;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: #B4B4B4;
+  text-align: center;
+  padding: 0px 0px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: #141414;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: #blue;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #B4B4B4;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 16.66%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+</style>
+
+<body>
+
+<div class="navbar">
+  <!--<a href="#home">Home</a>-->
+  <div class="dropdown">
+    <button class="dropbtn"><a href="index.html">PiranhaLab</a> 
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="index.html#Nosotrxs">Nosotrxs</a>
+      <!--<a href="index.html#Colaboradorxs">Colaboradorxs</a>-->
+      <a href="index.html#Contacto">Contacto</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn"><a href="proyectos.html">Proyectos</a> 
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="proyectos.html#CCD-PADID">Talleres CCD-PADID</a>
+      <a href="proyectos.html#Orbit">Orbit</a>
+      <a href="proyectos.html#ofhawc#">ofhawc</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn"><a href="eventos.html">Eventos</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="eventos.html#Proximos">Próximos</a>
+      <a href="eventos.html#Pasados">Pasados</a>
+    </div>
+  </div>
+  
+  <div class="dropdown">
+    <button class="dropbtn"><a href="media.html">Media</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+    </div>
+  </div>
+  
+  <div class="dropdown">
+    <button class="dropbtn"><a href="comunidad.html">Comunidad</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <!--<a href="#">Próximos</a>-->
+    </div>
+  </div>
+
+<!--  <div class="dropdown">
+    <button class="dropbtn"><a href="comunidad.html">English</a>
+      <i class=""></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Próximos</a>
+    </div>
+  </div> -->
+  <!--<a href="#home">Home</a>-->
+
+</div>
+
+<div class="w3-content" style="max-width:800px;margin-top:46px">
+
+  <!-- Header -->
+  <header class="w3-container w3-center w3-padding-64" id="Inicio">
+      <img class="w3-image" src="img/piranha-lab-fb-cover-v2.png" alt="Hamburger Catering">
+    <h1 class="w3-xxlarge"></h1>
+    <h6></h6>
+  </header>
+  
+  <section class="w3-container w3-center w3-padding-32" id="Proyectos">
+    <h1 class="">Proyectos</h1>
+    <p></p> <!-- tal vez cambiar esto -->
+  </section>
+  
+  <section class="w3-container w3-left w3-padding-32 w3-justify" id="CCD-PADID">
+    <h2 class="">Ciclo de Talleres en CCD</h2>
+
+    <p>El ciclo de talleres en el Centro de Cultura Digital se realizará una vez por mes de febrero a junio de 2019. El proyecto es apoyado por el Programa de Apoyo a la Docencia, Investigación y Difusión de las Artes (PADID) y es el resultado de una colaboración con el Laboratorio de Tecnologías Libres.</p>
+    
+    <p>PiranhaLab es una iniciativa que surge en el contexto de la conformación de comunidades que practican y reflexionan en torno a la programación al vuelo o live coding. El live coding es una práctica performática que se basa en técnicas de programación para la síntesis de audio y video, lo cual, posibilita la creación sinestésica audiovisual. Los practicantes de esta actividad o livecoders “exponen y re-acomodan las entrañas del software al mismo tiempo que generan música improvisada y/o visuales”<a href="#nota1">[1]</a>. </p> <!-- tal vez cambiar esto -->
+    <p>A través de este ciclo, el laboratorio busca visibilizar desarrollos de software<a href="#nota2">[2]</a> en México y América Latina que mediante código de programación, persiguen la creación de música y video en vivo. De manera paralela, busca explorar las posibilidades pedagógicas del código a partir de la enseñanza de habilidades técnicas y estéticas desde la integración sonido-imagen por medio de la computadora.</p>
+
+    <p>SuperCollider, ChucK, Fluxus, Overtone entre otros, son algunos de los entornos más populares que existen para hacer live coding. Basadas en éstas, existen herramientas de alto nivel que permiten hacer exploraciones rápidas y expresivas basadas en sistemas personalizados como Tidal Cycles, ixiLang y Sonic Pi. Éste tipo de programas aprovechan las posibilidades de motores de audio y video y están construidas en torno de conceptos  específicos que permiten explorar el lado expresivo de los lenguajes de programación.</p>
+
+    <p>La motivación por trabajar en este tipo de entornos ha sido bien recibida en países de América latina. Incluso, existen antecedentes significativos como el Simposio Internacional de Live Coding /*vivo*/, organizado por el taller de audio del Centro Multimedia de 2012 a 2014, que ha servido de antecedente para la configuración de una comunidad local que interactúa con una comunidad internacional. Festivales y conferencias herederas y coincidentes con esta iniciativa, como la Conferencia Internacional de Live Coding, Festival ART,  Festival en Tiempo Real, Festival Transpiksel, Reudo o los Algoraves organizados en todo el mundo, han ofrecido un espacio de reconocimiento para artistas, públicos y programadores que practican, desarrollan, estudian y reflexionan en torno a las posibilidades artísticas y expresivas del código en latitudes latinoamericanas. Estos espacios han permitido reconocer(nos) como usuarios pero también como desarrolladores de herramientas de alto nivel.</p>
+
+    <h3><a href="https://github.com/essteban/CineVivo">CineVivo</a></h3>
+
+    <p> Una aplicación para hacer live coding con muestras de video y cámaras en tiempo real y que puede ser controlada por su propio mini lenguaje o usando el protocolo OSC. La interfaz de texto que controla los mensajes OSC es personalizable y permite a los usuarios establecer conexiones poéticas, metafóricas o instrumentales que impactan en el contenido simbólico y significativo del performance dando así, riqueza a la composición visual.  
+</p>
+
+     <img class="w3-image w3-center" src="img/cinevivo2.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">
+    
+    <h3><a href="https://github.com/josecaos/caosbox">Caosbox</a></h3>
+
+    <p>CaosBox es un secuenciador/procesador para la biblioteca ‘caosperclib’ escrita en Supercollider.  Esta librería utiliza síntesis de audio y prescinde de muestras de audio. El usuario improvisa bajo la premisa de la programación al vuelo e interactúa con una interfaz gráfica de usuario para controlar los parámetros de cada función percusiva pensadas como melodía, ritmos y armonía.</p>
+
+    <h3><a href="https://github.com/rodrigo-frenk/INSTRUMENT">INSTRUMENT</a></h3>
+    
+    <p>Es una aplicación multiplataforma construida con HTML y Javascript, utilizando electron, supercolliderjs y node-midi. SuperCollider es el motor de audio. Es un sistema pensado para músicos o bandas que quieran integrar herramientas electrónicas a sus actos en vivo. Es una extensión de los músicos y de los ensambles, ofreciendo control de sintetizadores y procesamiento de señal, a la vez que herramientas de audio para sampleo, live-looping y mezcla. La idea principal es que todos los sonidos electrónicos que podamos escuchar en un concierto provengan de acciones físicas de los músicos.</p>
+
+    <h3><a href="https://github.com/nanc-in-a-can/canon-generator">Canon Generator</a></h3>
+    
+    <p>Esta librería es una colección que tiene por objetivo crear cánones temporales inspirados en las ideas de Conlon Nancarrow. Canon Generator permite experimentar las ideas de Nancarrow, escucharlas, sonorizarlas a partir del análisis de datos. El protocolo OSC permite darle una salida de SuperCollider al Canon desarrollado con una interfaz gráfica que permite visualizar el movimiento del cánon, creando partituras visuales.</p>
+
+    <img class="w3-image w3-center" src="img/nanc.jpg" alt="Nanc" style="width:100%;margin-bottom:64px;margin-top:32px">
+
+    <h3><a href="https://github.com/EmilioOcelotl/Orbit">PiranhaLib y Orbit</a></h3>
+    
+    <p>PiranhaLib es una serie de clases de SuperCollider que sirven para controlar audio/video. La idea central del proyecto se basa en generadores de envolventes que controlan el sonido. La librería parte de la interrelación de muestras de audio previamente grabadas y síntesis de audio. para el video, PiranhaLib se comunica con aplicaciones exteriores escritas en la plataforma OpenFrameworks.</p>
+
+    <img class="w3-image w3-center" src="img/orbit1.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">
+    
+    <h3><a href="https://github.com/ojack/hydra">Hydra</a></h3>
+
+    <p>Herramienta para hacer visuales en red por medio de live coding en el explorador. Está inspirado en los sintetizadores modulares análogos. Hydra usa múltiples búferes de imagen que se combinan dinámicamente para crear composiciones visuales. Es posible generar visuales en formato colaborativo por su formato en red. Imagen tomada de <a href="https://twitter.com/hydra_patterns/status/1079080030418939904">Hydra Patterns</a></p>
+
+    <img class="w3-image w3-center" src="img/hydra1.png" alt="Hydra" style="width:100%;margin-bottom:64px;margin-top:32px">
+    
+    <h4>Notas</h4>
+    <p id="nota1">1. Toplap. Recuperado de <a href="https://toplap.org/about/">https://toplap.org/about/</a> (Consultado el 30 de julio de 2018)</p>
+    <p id="nota2">2. El presente proyecto considera desarrollo como el proceso de concebir, diseñar, programar, documentar, probar y resolver problemas en la creación y mantenimiento de software. En particular, el proyecto toma en consideración un desarrollo como la versión mínima estable con posibilidades de expansión y mejora.</p> 
+  </section>
+
+  
+  <section class="w3-container w3-left w3-padding-32" id="Orbit">
+    <h2 class=""> Orbit</h2>
+    <p>Orbit es una proyecto abierto multiplataforma (osx, linux, win) para audio y visuales basado en OpenFrameworks. El proyecto aprovecha las posibilidades del texto como interfaz. A través de una sintaxis sencilla de invocación de instrucciones, es posible utilizar Orbit para visualizar el código declarado en SuperCollider y hacerlo interactuar con videos, objetos 3d y texto. </p>
+    <img class="w3-image w3" src="img/orbit3.png" alt="orbit" style="width:100%;margin-bottom:64px;margin-top:32px">
+    <p>Orbit cuenta con 5 posibles capas de control: 1) mensajes provenientes de otras aplicaciones, tanto de texto como de control, 2) Texto que se escribe directamente en pantalla, 3) El punto de vista y la posición de la cámara, 4) Objetos tridimensionales, previamente realizados o primitivos de OF y 4) Shaders y efectos que modifican la imagen.</p>
+  </section>
+ 
+  <section class="w3-container w3-left w3-padding-32" id="ofhawc">
+    <h2 class="">ofhawc</h2>
+    <p>Visualizador basado en OpenFrameworks de los datos de posición y curvas de luz de fuentes observadas. Estos datos fueron recopilados por el Observatorio de Rayos Gamma HAWC (High-Altitude Water Cherenkov Gamma-Ray Observatory). El proyecto surge a propósito del Hackatón Astronómico y es parte de un proyecto colaborativo que se complementa con 2HAWC y sc_hawc y parte de la práctica performática del Live Coding.</p>
+    <img class="w3-image w3-center" src="img/ofhawcimg.png" alt="Hamburger Catering" style="width:100%;margin-bottom:64px;margin-top:32px">
+      </section>
+  
+<!-- Container (Contact Section) -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-48 w3-center w3-xxlarge">
+  <a href="https://www.facebook.com/piranhalab/"><i class="fa fa-facebook-official"></i></a>
+  <a href="#"><i class="fa fa-twitter"></i></a>
+  <a href="#"><i class="fa fa-github"></i></a>
+  <a href="#"><i class="fa fa-instagram"></i></a>
+  <a href="#"><i class="fa fa-vimeo"></i></a>
+  <a href="mailto:piranha.laboratorio@gmail.com"><i class="fa fa-envelope"></i></a>
+  <p class="w3-large"><*(((-{</p>
+</footer>
+
+</body>
+</html>
