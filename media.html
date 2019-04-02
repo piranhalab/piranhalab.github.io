@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<link rel="shortcut icon" href="img/favicon.ico">
 
 <style>
+
+  .mySlides {display: none}
 
 body {
     background-color: white;
@@ -34,16 +36,16 @@ body {
 
 .navbar {
   overflow: hidden;
-  background-color: white;
+  background-color: #121212;
   font-family: 'Montserrat';font-size: 18px;
 }
 
 .navbar a {
   float: left;
   font-size: 16px;
-  color: #121212;
+  color: #B4B4B4;
   text-align: center;
-  padding: 0px 0px;
+  padding: 8px 0px;
   text-decoration: none;
 }
 
@@ -99,6 +101,9 @@ body {
 
 <div class="navbar">
   <!--<a href="#home">Home</a>-->
+      <a class="navbar-brand">
+        <img src="img/logo-03.png"  style="max-width:50px; margin-left:8px" alt="">
+        </a>
   <div class="dropdown">
     <button class="dropbtn"><a href="index.html">PiranhaLab</a> 
       <i class=""></i>
@@ -161,19 +166,44 @@ body {
 
 <div class="w3-content" style="max-width:800px;margin-top:46px">
 
-  <!-- Header -->
-  <header class="w3-container w3-center w3-padding-64" id="Inicio">
-      <img class="w3-image" style="max-width:25%" src="img/logo-01.png" alt="Hamburger Catering">
-    <h1 class="w3-xxlarge"></h1>
-    <h6></h6>
-  </header>
-  
   <section class="w3-container w3-center w3-padding-32" id="Media">
     <h1 class="">Media</h1>
   </section>
 
-  <section class="w3-container w3-left w3-padding-16">
+  <section class="w3-container w3-center w3-padding-16">
     <h2 class="w3-wide"></h2>
+    <img class="w3-image" style="max-width:100%" src="img/posterTalleres.jpg" alt="Hamburger Catering">
+    <img class="w3-image w3-center w3-padding-8" src="img/conversatorio.jpg" alt="CCD" style="width:100%">
+
+           <div class="w3-content w3-display-container w3-padding-8">
+
+	 <img class="mySlides2" src="img/esteban6.jpg" style="width:100%">
+	 <img class="mySlides2" src="img/esteban2.jpg" style="width:100%">
+	 <img class="mySlides2" src="img/esteban3.jpg" style="width:100%">
+	 <img class="mySlides2" src="img/esteban4.jpg" style="width:100%">
+	 <img class="mySlides2" src="img/esteban5.jpg" style="width:100%">
+	 <img class="mySlides2" src="img/esteban1.jpg" style="width:100%">
+
+	 <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1, 1)">&#10094;</button>
+	 <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1, 1)">&#10095;</button>
+       </div>
+
+    
+    
+       <div class="w3-content w3-display-container w3-padding-8">
+
+	 <img class="mySlides1" src="img/mix5.jpg" style="width:100%">
+	 <img class="mySlides1" src="img/mix2.jpg" style="width:100%">
+	 <img class="mySlides1" src="img/mix3.jpg" style="width:100%">
+	 <img class="mySlides1" src="img/mix4.jpg" style="width:100%">
+	 <img class="mySlides1" src="img/mix1.jpg" style="width:100%">
+	 <img class="mySlides1" src="img/mix6.jpg" style="width:100%">
+
+
+	 <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1, 0)">&#10094;</button>
+	 <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1, 0)">&#10095;</button>
+       </div>
+
     <p></p>
   </section>
 
@@ -202,7 +232,30 @@ body {
 
 <!-- Container (Contact Section) -->
 
-  </div>
+</div>
+
+	<script>
+var slideIndex = [1,1];
+	  var slideId = ["mySlides1", "mySlides2"]
+showDivs(1, 0);
+showDivs(1, 1);
+
+function plusDivs(n, no) {
+  showDivs(slideIndex[no] += n, no);
+}
+
+function showDivs(n, no) {
+  var i;
+  var x = document.getElementsByClassName(slideId[no]);
+  if (n > x.length) {slideIndex[no] = 1}    
+  if (n < 1) {slideIndex[no] = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex[no]-1].style.display = "block";  
+}
+	</script>
+
 
 <!-- Footer -->
 <footer class="w3-container w3-padding-48 w3-center w3-xxlarge">

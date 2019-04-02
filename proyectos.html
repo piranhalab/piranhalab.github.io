@@ -5,12 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<link rel="shortcut icon" href="img/favicon.ico">
 
 <style>
-
-  .mySlides {display: none}
   
 body {
     background-color: white;
@@ -36,16 +34,16 @@ body {
 
 .navbar {
   overflow: hidden;
-  background-color: white;
+  background-color: #121212;
   font-family: 'Montserrat';font-size: 18px;
 }
 
 .navbar a {
   float: left;
   font-size: 16px;
-  color: #121212;
+  color: #B4B4B4;
   text-align: center;
-  padding: 0px 0px;
+  padding: 8px 0px;
   text-decoration: none;
 }
 
@@ -115,7 +113,12 @@ body {
 
 <div class="navbar">
   <!--<a href="#home">Home</a>-->
+    <a class="navbar-brand" style>
+        <img src="img/logo-03.png"  style="max-width:50px; margin-left:8px" alt="">
+        </a>
   <div class="dropdown">
+      
+
     <button class="dropbtn"><a href="index.html">PiranhaLab</a> 
       <i class=""></i>
     </button>
@@ -176,22 +179,13 @@ body {
 
 <div class="w3-content" style="max-width:800px;margin-top:46px">
 
-  <!-- Header -->
-  <header class="w3-container w3-center w3-padding-64" id="Inicio">
-      <img class="w3-image" style="max-width:25%" src="img/logo-01.png" alt="Hamburger Catering">
-    <h1 class="w3-xxlarge"></h1>
-    <h6></h6>
-  </header>
-  
-  <section class="w3-container w3-center w3-padding-32" id="Proyectos">
+  <section class="w3-container w3-left w3-padding-32" id="Proyectos">
     <h1 class="">Proyectos</h1>
     <p></p> <!-- tal vez cambiar esto -->
   </section>
   
-  <section class="w3-container w3-left w3-padding-32 w3-justify" id="CCD-PADID">
+  <section class="w3-container w3-left w3-padding-64 w3-justify" id="CCD-PADID">
     <h2 class="">Ciclo de Talleres en CCD</h2>
-
-    <img class="w3-image w3-center" src="img/conversatorio.jpg" alt="CCD" style="width:100%;margin-bottom:32px;margin-top:32px">
     
     <p>El ciclo de talleres en el Centro de Cultura Digital se realizará una vez por mes de febrero a junio de 2019. El proyecto es apoyado por el Programa de Apoyo a la Docencia, Investigación y Difusión de las Artes (PADID) y es el resultado de la colaboración con el Laboratorio de Tecnologías Libres cel Centro de Cultura Digital.</p>    
     <p>PiranhaLab es una iniciativa que surge en el contexto de la conformación de comunidades que practican y reflexionan en torno a la programación al vuelo o live coding. El live coding es una práctica performática que se basa en técnicas de programación para la síntesis de audio y video, lo cual, posibilita la creación sinestésica audiovisual. Los practicantes de esta actividad o livecoders “exponen y re-acomodan las entrañas del software al mismo tiempo que generan música improvisada y/o visuales”<a href="#nota1">[1]</a>. </p> <!-- tal vez cambiar esto -->
@@ -208,112 +202,54 @@ body {
     <!--<img class="w3-image w3-center" src="img/cinevivo2.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">-->
 
            <!--esteban imgs-->
-       
-       <div class="w3-content w3-display-container w3-padding-64">
-
-	 <img class="mySlides2" src="img/esteban6.jpg" style="width:100%">
-	 <img class="mySlides2" src="img/esteban2.jpg" style="width:100%">
-	 <img class="mySlides2" src="img/esteban3.jpg" style="width:100%">
-	 <img class="mySlides2" src="img/esteban4.jpg" style="width:100%">
-	 <img class="mySlides2" src="img/esteban5.jpg" style="width:100%">
-	 <img class="mySlides2" src="img/esteban1.jpg" style="width:100%">
-
-	 <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1, 1)">&#10094;</button>
-	 <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1, 1)">&#10095;</button>
-       </div>
-
-    
+           
     <h3><a href="https://github.com/josecaos/caosbox">Caosbox - José Carlos Hasbun</a></h3>
 
     <p>CaosBox es un secuenciador/procesador para la biblioteca ‘caosperclib’ escrita en Supercollider.  Esta librería utiliza síntesis de audio y prescinde de muestras de audio. El usuario improvisa bajo la premisa de la programación al vuelo e interactúa con una interfaz gráfica de usuario para controlar los parámetros de cada función percusiva pensadas como melodía, ritmos y armonía.</p>
-
-    
-       <div class="w3-content w3-display-container w3-padding-64">
-
-	 <img class="mySlides1" src="img/mix5.jpg" style="width:100%">
-	 <img class="mySlides1" src="img/mix2.jpg" style="width:100%">
-	 <img class="mySlides1" src="img/mix3.jpg" style="width:100%">
-	 <img class="mySlides1" src="img/mix4.jpg" style="width:100%">
-	 <img class="mySlides1" src="img/mix1.jpg" style="width:100%">
-	 <img class="mySlides1" src="img/mix6.jpg" style="width:100%">
-
-
-	 <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1, 0)">&#10094;</button>
-	 <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1, 0)">&#10095;</button>
-       </div>
 
     <h3><a href="https://github.com/punksnotdev/INSTRUMENT">Instrument - Rodrigo Frenk</a></h3>
     
     <p>Es una aplicación multiplataforma construida con HTML y Javascript, utilizando electron, supercolliderjs y node-midi. SuperCollider es el motor de audio. Es un sistema pensado para músicos o bandas que quieran integrar herramientas electrónicas a sus actos en vivo. Es una extensión de los músicos y de los ensambles, ofreciendo control de sintetizadores y procesamiento de señal, a la vez que herramientas de audio para sampleo, live-looping y mezcla. La idea principal es que todos los sonidos electrónicos que podamos escuchar en un concierto provengan de acciones físicas de los músicos.</p>
     
-    <img class="w3-image w3-center" src="img/instrument.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">
+    <!--<img class="w3-image w3-center" src="img/instrument.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">-->
     
     <h3><a href="https://github.com/nanc-in-a-can/canon-generator">Canon Generator - Diego Villaseñor y Alejandro Franco Briones</a></h3>
     
     <p>Esta librería es una colección que tiene por objetivo crear cánones temporales inspirados en las ideas de Conlon Nancarrow. Canon Generator permite experimentar las ideas de Nancarrow, escucharlas, sonorizarlas a partir del análisis de datos. El protocolo OSC permite darle una salida de SuperCollider al Canon desarrollado con una interfaz gráfica que permite visualizar el movimiento del cánon, creando partituras visuales.</p>
 
-    <img class="w3-image w3-center" src="img/nanc.jpg" alt="Nanc" style="width:100%;margin-bottom:64px;margin-top:32px">
+    <!--<img class="w3-image w3-center" src="img/nanc.jpg" alt="Nanc" style="width:100%;margin-bottom:64px;margin-top:32px">-->
 
     <h3><a href="https://github.com/EmilioOcelotl/Orbit">Orbit/PiranhaLib - Emilio Ocelotl y Marianne Teixido</a></h3>
     
     <p>PiranhaLib es una serie de clases de SuperCollider que sirven para controlar audio/video. La idea central del proyecto se basa en generadores de envolventes que controlan el sonido. La librería parte de la interrelación de muestras de audio previamente grabadas y síntesis de audio. para el video, PiranhaLib se comunica con aplicaciones exteriores escritas en la plataforma OpenFrameworks.</p>
 
-    <img class="w3-image w3-center" src="img/orbit1.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">
+    <!--<img class="w3-image w3-center" src="img/orbit1.png" alt="Orbit" style="width:100%;margin-bottom:64px;margin-top:32px">-->
     
     <h3><a href="https://github.com/ojack/hydra">Hydra - Olivia Jack</a></h3>
 
-    <p>Herramienta para hacer visuales en red por medio de live coding en el explorador. Está inspirado en los sintetizadores modulares análogos. Hydra usa múltiples búferes de imagen que se combinan dinámicamente para crear composiciones visuales. Es posible generar visuales en formato colaborativo por su formato en red. Imagen tomada de <a href="https://twitter.com/hydra_patterns/status/1079080030418939904">Hydra Patterns</a></p>
+    <p>Herramienta para hacer visuales en red por medio de live coding en el explorador. Está inspirado en los sintetizadores modulares análogos. Hydra usa múltiples búferes de imagen que se combinan dinámicamente para crear composiciones visuales. Es posible generar visuales en formato colaborativo por su formato en red.
 
-    <img class="w3-image w3-center" src="img/hydra1.png" alt="Hydra" style="width:100%;margin-bottom:64px;margin-top:32px">
+    <!--<img class="w3-image w3-center" src="img/hydra1.png" alt="Hydra" style="width:100%;margin-bottom:64px;margin-top:32px">-->
     
     <h4>Notas</h4>
     <p id="nota1">1. Toplap. Recuperado de <a href="https://toplap.org/about/">https://toplap.org/about/</a> (Consultado el 30 de julio de 2018)</p>
     <p id="nota2">2. El presente proyecto considera desarrollo como el proceso de concebir, diseñar, programar, documentar, probar y resolver problemas en la creación y mantenimiento de software. En particular, el proyecto toma en consideración un desarrollo como la versión mínima estable con posibilidades de expansión y mejora.</p>
 
-  </section>
-
-  
-  <section class="w3-container w3-left w3-padding-32" id="Orbit">
     <h2 class=""> Orbit</h2>
     <p>Orbit es una proyecto abierto multiplataforma (osx, linux, win) para audio y visuales basado en OpenFrameworks. El proyecto aprovecha las posibilidades del texto como interfaz. A través de una sintaxis sencilla de invocación de instrucciones, es posible utilizar Orbit para visualizar el código declarado en SuperCollider y hacerlo interactuar con videos, objetos 3d y texto. </p>
-    <img class="w3-image w3" src="img/orbit3.png" alt="orbit" style="width:100%;margin-bottom:64px;margin-top:32px">
+    <!--<img class="w3-image w3" src="img/orbit3.png" alt="orbit" style="width:100%;margin-bottom:64px;margin-top:32px">-->
     <p>Orbit cuenta con 5 posibles capas de control: 1) mensajes provenientes de otras aplicaciones, tanto de texto como de control, 2) Texto que se escribe directamente en pantalla, 3) El punto de vista y la posición de la cámara, 4) Objetos tridimensionales, previamente realizados o primitivos de OF y 4) Shaders y efectos que modifican la imagen.</p>
-  </section>
- 
-  <section class="w3-container w3-left w3-padding-32" id="ofhawc">
+
     <h2 class="">ofhawc</h2>
     <p>Visualizador basado en OpenFrameworks de los datos de posición y curvas de luz de fuentes observadas. Estos datos fueron recopilados por el Observatorio de Rayos Gamma HAWC (High-Altitude Water Cherenkov Gamma-Ray Observatory). El proyecto surge a propósito del Hackatón Astronómico y es parte de un proyecto colaborativo que se complementa con 2HAWC y sc_hawc y parte de la práctica performática del Live Coding.</p>
-    <img class="w3-image w3-center" src="img/ofhawcImg.png" alt="ofhawc" style="width:100%;margin-bottom:64px;margin-top:32px">
+
+    <!--<img class="w3-image w3-center" src="img/ofhawcImg.png" alt="ofhawc" style="width:100%;margin-bottom:64px;margin-top:32px">-->
       </section>
-  
 <!-- Container (Contact Section) -->
-</div>
-
-	<script>
-var slideIndex = [1,1];
-	  var slideId = ["mySlides1", "mySlides2"]
-showDivs(1, 0);
-showDivs(1, 1);
-
-function plusDivs(n, no) {
-  showDivs(slideIndex[no] += n, no);
-}
-
-function showDivs(n, no) {
-  var i;
-  var x = document.getElementsByClassName(slideId[no]);
-  if (n > x.length) {slideIndex[no] = 1}    
-  if (n < 1) {slideIndex[no] = x.length}
-  for (i = 0; i < x.length; i++) {
-     x[i].style.display = "none";  
-  }
-  x[slideIndex[no]-1].style.display = "block";  
-}
-	</script>
 
 
 <!-- Footer -->
-<footer class="w3-container w3-padding-48 w3-center w3-xxlarge">
+<footer class="w3-container w3-padding-64 w3-center w3-xxlarge">
   <a href="https://www.facebook.com/piranhalab/"><i class="fa fa-facebook-official"></i></a>
   <a href="https://github.com/piranhalab"><i class="fa fa-github"></i></a>
   <a href="https://www.instagram.com/piranhalab/"><i class="fa fa-instagram"></i></a>
