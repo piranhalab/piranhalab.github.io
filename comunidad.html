@@ -133,6 +133,21 @@ body {
   display: block;
 }
 
+
+.forma{
+  display: inline-block;
+  margin: 16px;
+}
+
+#paralelogramo {
+   width: 100px; 
+   height: 150px; 
+   background: linear-gradient(#3B1FE3, #01FFFF, #48E15E);
+   -webkit-transform: skew(40deg); 
+   -moz-transform: skew(40deg); 
+   -o-transform: skew(40deg); 
+}
+
 </style>
 
 <body>
@@ -207,11 +222,22 @@ body {
 
 <!--<section class="w3-container w3-left w3-padding-32" style="max-width:1300px" id="Inicio">-->
   
-  <section class="w3-container w3-left w3-padding-32">
+ 
+  <section class="w3-display-container w3-left w3-padding-32" id="PiranhaLab">
+
+    <header class="w3-display-container w3-content w3-wide">
+      <div id="paralelogramo" class="forma"></div>
+
+  <div class="w3-display-left w3-padding-large">
     <h1 class="">Comunidad</h1>
+  </div>
+</header>
+    
+    <!--<h1 class="">PiranhaLab</h1>-->
+    <p></p> <!-- tal vez cambiar esto -->
   </section>
-  
-  <section class="w3-container w3-left w3-padding-32 w3-justify">
+ 
+  <section class="w3-container w3-left w3-padding-16 w3-justify">
     <h2 class="w3-wide"></h2>
     <p>Ligas que conducen a herramientas, escritos, tutoriales y grupos. Recursos preferentemente elegidos en español. El cuadro de búsqueda permite filtrar enlaces de acuerdo a palabras clave. El acervo está en constante construcción y modifica su orden cada vez que el sitio se refresca.</p>
   </section>

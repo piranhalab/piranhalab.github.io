@@ -11,12 +11,12 @@
 
 <style>
 
-body {
-    background-color: white;
-    font-family: 'Montserrat';font-size: 16px;
-}
+  body {
+      background-color: white;
+      font-family: 'Montserrat';font-size: 16px;
+  }
 
-.w3-container {
+  .w3-container {
     color: black;
     background-color: white;
     font-family: 'Montserrat';font-size: 16px;
@@ -94,10 +94,24 @@ body {
   display: block;
 }
 
+.forma{
+  display: inline-block;
+  margin: 16px;
+}
+
+#paralelogramo {
+   width: 100px; 
+   height: 150px; 
+   background: linear-gradient(#3B1FE3, #01FFFF, #48E15E);
+   -webkit-transform: skew(40deg); 
+   -moz-transform: skew(40deg); 
+   -o-transform: skew(40deg); 
+}
+
 </style>
 
 <body>
-
+  
 <div class="navbar">
   <!--<a href="#home">Home</a>-->
       <a class="navbar-brand">
@@ -164,14 +178,23 @@ body {
 
 <div class="w3-content" style="max-width:800px;margin-top:46px">
 
+  <section class="w3-display-container w3-left w3-padding-32" id="PiranhaLab">
 
-  <section class="w3-container w3-left w3-padding-32" id="PiranhaLab">
+    <header class="w3-display-container w3-content w3-wide">
+      <div id="paralelogramo" class="forma"></div>
+
+  <div class="w3-display-left w3-padding-large">
     <h1 class="">PiranhaLab</h1>
+  </div>
+</header>
+    
+    <!--<h1 class="">PiranhaLab</h1>-->
     <p></p> <!-- tal vez cambiar esto -->
   </section>
   
   <section class="w3-container w3-left w3-padding-16 w3-justify" id="Nosotrxs">
     <h2 class="">Nosotrxs</h2>
+
     <p>PiranhaLab es un laboratorio interdisciplinario que trabaja en las tripas del software.</p> <!-- tal vez cambiar esto -->
     <p>El laboratorio tiene como objetivo impulsar la práctica, el desarrollo, la investigación y la difusión de software orientado a la creación audiovisual. Enfoca su actividad en la comunidad que practica la Programación al Vuelo o Live Coding en México y Latinoamérica.</p>
     <a href="https://emilioocelotl.github.io"><p style="margin-top:64px">Emilio Ocelotl</p></a>

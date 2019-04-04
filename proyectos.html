@@ -107,6 +107,22 @@ body {
   display: table;
 }
 
+
+.forma{
+  display: inline-block;
+  margin: 16px;
+}
+
+#paralelogramo {
+   width: 100px; 
+   height: 150px; 
+   background: linear-gradient(#3B1FE3, #01FFFF, #48E15E);
+   -webkit-transform: skew(40deg); 
+   -moz-transform: skew(40deg); 
+   -o-transform: skew(40deg); 
+}
+
+
 </style>
 
 <body>
@@ -179,15 +195,24 @@ body {
 
 <div class="w3-content" style="max-width:800px;margin-top:46px">
 
-  <section class="w3-container w3-left w3-padding-32" id="Proyectos">
+  <section class="w3-display-container w3-left w3-padding-32" id="PiranhaLab">
+
+    <header class="w3-display-container w3-content w3-wide">
+      <div id="paralelogramo" class="forma"></div>
+
+  <div class="w3-display-left w3-padding-large">
     <h1 class="">Proyectos</h1>
+  </div>
+</header>
+    
+    <!--<h1 class="">PiranhaLab</h1>-->
     <p></p> <!-- tal vez cambiar esto -->
   </section>
   
-  <section class="w3-container w3-left w3-padding-64 w3-justify" id="CCD-PADID">
+  <section class="w3-container w3-left w3-padding-16 w3-justify" id="CCD-PADID">
     <h2 class="">Ciclo de Talleres en CCD</h2>
     
-    <p>El ciclo de talleres en el Centro de Cultura Digital se realizará una vez por mes de febrero a junio de 2019. El proyecto es apoyado por el Programa de Apoyo a la Docencia, Investigación y Difusión de las Artes (PADID) y es el resultado de la colaboración con el Laboratorio de Tecnologías Libres cel Centro de Cultura Digital.</p>    
+    <p>El ciclo de talleres en el Centro de Cultura Digital se realizará una vez por mes de febrero a junio de 2019. El proyecto es apoyado por el Programa de Apoyo a la Docencia, Investigación y Difusión de las Artes (PADID) y es el resultado de la colaboración con el Laboratorio de Tecnologías Libres del Centro de Cultura Digital.</p>    
     <p>PiranhaLab es una iniciativa que surge en el contexto de la conformación de comunidades que practican y reflexionan en torno a la programación al vuelo o live coding. El live coding es una práctica performática que se basa en técnicas de programación para la síntesis de audio y video, lo cual, posibilita la creación sinestésica audiovisual. Los practicantes de esta actividad o livecoders “exponen y re-acomodan las entrañas del software al mismo tiempo que generan música improvisada y/o visuales”<a href="#nota1">[1]</a>. </p> <!-- tal vez cambiar esto -->
     <p>A través de este ciclo, el laboratorio busca visibilizar desarrollos de software<a href="#nota2">[2]</a> en México y América Latina que mediante código de programación, persiguen la creación de música y video en vivo. De manera paralela, busca explorar las posibilidades pedagógicas del código a partir de la enseñanza de habilidades técnicas y estéticas desde la integración sonido-imagen por medio de la computadora.</p>
 
