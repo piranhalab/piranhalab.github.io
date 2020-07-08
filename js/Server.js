@@ -3,19 +3,25 @@ export const Users = {}
 export const Server = {
 	init: function(){
 		let uuid = Math.random().toString(16).substr(2);
-		
+                let nickname = "anon-"+Math.random().toString(16).slice(2,6)
+
+
 		if(!localStorage.getItem("uuid")){
 			localStorage.setItem("uuid", uuid)
 		}else{
 			uuid = localStorage.getItem("uuid")
 		}
-		
+
+                if(!localStorage.getItem("nickname")){
+                        localStorage.setItem("nickname", nickname)
+                }else{
+                        nickname = localStorage.getItem("nickname")
+                }
+
 		if(!Users.me){
-			Users.me = new User(uuid, "anon-"+Math.random().toString(16).slice(2,6), {x:0, y:10, z:0}, {x:0, y:0, z:0}); 
-			dispatchEvent(Users.me.add)
+			Users.me = new User(uuid, nickname, {x:0, y:10, z:0}, {x:0, y:0, z:0}); 
 		}
 
-		const nickname = Users.me.nickname;
 		const position = Users.me.position;
 		const rotation = Users.me.rotation;
 		const query = [uuid, nickname, position.x, position.y, position.z, rotation.x, rotation.y, rotation.z];
@@ -134,7 +140,6 @@ export function chat(msg){
 	msg = msg.replace( /^(\s\n)+/g, '');
 	msg = msg.replace(/(\s|\n)+$/,'')
 
-	console.debug(`${msg}"`,"**")
 	if(msg.length == 0) return
 
 	Server.socket.emit("chat", msg)

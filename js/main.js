@@ -1,14 +1,19 @@
 "use strict";
 import * as THREE from '/js/three/build/three.module.js';
 import {PointerLockControls} from '/js/three/examples/jsm/controls/PointerLockControls.js';
+import {GLTFLoader} from '/js/three/examples/jsm/loaders/GLTFLoader.js'; 
 import * as flvPlayer from '/js/flv.min.js';
 import { Server, Users, chat} from '/js/Server.js';
+import { Fire } from '/js/Fire.js'; 
+
+// Aqui?
+
 const personajes = {}
 const edges = {
 	init: function(){
 		this.scene = new THREE.Scene()
 		this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1500)
-		this.camera.position.z = 400;
+		this.camera.position.z = 800;
 		//this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 		this.renderer  = new THREE.WebGLRenderer({ antialias: true })
 
@@ -18,7 +23,7 @@ const edges = {
 		document.querySelector('#distopia').appendChild(this.renderer.domElement)
 
 		this.controls = new PointerLockControls(this.camera, document.body)
-		this.scene.background = new THREE.CubeTextureLoader().setPath('/img/espacio/').load([
+		this.scene.background = new THREE.CubeTextureLoader().setPath('/img/').load([
 			'px.jpg',
 			'nx.jpg',
 			'py.jpg',
@@ -35,7 +40,7 @@ const edges = {
 		this.addFloor();
 
 		this.addCiudad();
-		this.addHuachimontones();
+		//this.addHuachimontones();
 
 		this.addZordon();
 		this.addScreen
@@ -46,7 +51,6 @@ const edges = {
 		//this.addAudio()
 	        this.addScreen()
 	        this.mkSat()
-	    
 
 		this.animate();
 
@@ -80,7 +84,7 @@ const edges = {
 		//texture.wrapT = THREE.RepeatWrapping;
 	
 		
-		var floorTexture = new THREE.TextureLoader().load( 'img/city6.jpg', function ( floorTexture ) {
+		var floorTexture = new THREE.TextureLoader().load( 'img/texture.jpg', function ( floorTexture ) {
 			floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
 			floorTexture.offset.set( 0, 0 );
 			floorTexture.repeat.set( 40, 40 );
@@ -103,7 +107,7 @@ const edges = {
 		floor.position.y = -4;
 
                 this.scene.add( floor );
-                this.scene.add (wetfloor);
+            // this.scene.add (wetfloor);
 	},
 	addLightHuachimontones: function(){
 
@@ -129,7 +133,9 @@ const edges = {
 		this.scene.add( this.clight3 )
 		this.scene.add( this.clight4 )
 	},
-	addHuachimontones: function(){
+    addHuachimontones: function(){
+
+	/*
 		let pilaresMaterial = new THREE.MeshBasicMaterial( {
 			color: 0xffffff,
 			envMap: this.scene.background,
@@ -149,23 +155,29 @@ const edges = {
 			cube.scale.z = 0.2;
 			this.scene.add(cube);
 		}
+	*/
 	},
 	addCiudad: function(){
-		let cityLoader = new THREE.TextureLoader();
+		//let cityLoader = new THREE.TextureLoader();
 		
-		let cityGeometry = new THREE.BoxGeometry(10, 10, 10);
-		
+		//let cityGeometry = new THREE.BoxGeometry(10, 10, 10);
+
+	    let cityGeometry = new THREE.TorusKnotBufferGeometry(15, 0.5, 100, 16 );
+
+/*	    
 		let cityTexture = cityLoader.load( 'img/after.jpg', function ( cityTexture ) {
 			cityTexture.wrapS = cityTexture.wrapT = THREE.RepeatWrapping;
 			cityTexture.offset.set( 0, 0 );
 			cityTexture.repeat.set( 0.5, 0.5 );
 		});
+
+*/
 		
 		var cityMaterial = new THREE.MeshStandardMaterial( {
 			
 			color: 0xffffff,
 			metalness: 0.9,
-			roughness: 0.89,
+			roughness: 0.49,
                         //envmap: scene.background,
                         //side: THREE.DoubleSide,
                         // map: cityTexture,
@@ -175,24 +187,25 @@ const edges = {
 		let tam;
 
 
-	    		      for(var i = 0; i < 10; i++){
-			  for(var j = 0; j < 12; j++){
+	    		      for(var i = 0; i < 20; i++){
+			  for(var j = 0; j < 20; j++){
 			      var city = new THREE.Mesh( cityGeometry, cityMaterial );
 			      //city.wireframe = true;
 			      //city.wireframeLinewidth = 2; 
-			      tam = Math.random() * 160; 
+			      tam = Math.random() * 320; 
 			      
-			      city.position.x = i * 50 - 650; 
-			      city.position.z = j* 50 + 400;
+			      city.position.x = i * 100 - 1000; 
+			      city.position.z = j* 100 - 1000;
 			      city.position.y = tam  ; 
 			      city.scale.x = 3;
 			      city.scale.y = 3;
 			      city.scale.z = 3; 
-			      
+			      city.rotation.x = Math.PI /2 * Math.random(); 
 			      this.scene.add( city);
 			  }
 		      }
-		      
+
+	    /*
 		      for(var i = 0; i < 10; i++){
 			  for(var j = 0; j < 12; j++){
 			      var city = new THREE.Mesh( cityGeometry, cityMaterial);
@@ -211,7 +224,7 @@ const edges = {
 			  }
 		      }
 
-
+	    */
 
 	},
 	addZordon: function(){
@@ -221,7 +234,7 @@ const edges = {
 		this.zordonMaterial = new THREE.MeshBasicMaterial({
 			color: 0xffffff,
 			//metalness: 0.2,
-			//roughness: 0.9,
+			//roughness: 0.6,
                         map: this.zordonTexture,
                         side: THREE.DoubleSide,
                         //castShadow: false,
@@ -250,25 +263,22 @@ const edges = {
 
                 audio.setMediaElementSource(  element );
 
-		let aSourceMaterial = new THREE.MeshBasicMaterial( {
+	    /*
+		let aSourceMaterial = new THREE.MeshStandardMaterial( {
 			color: 0xffffff,
 			envMap: this.scene.background,
 			refractionRatio: 0.75
 		} );
-		
-		let aSourceGeometry = new THREE.BoxGeometry(20, 20, 20);
-		let aSource = new THREE.Mesh( aSourceGeometry, aSourceMaterial );
+	    */
 
-                //aSource.add( positionalAudio ); // asociar el audio a una fuente
-
-                this.scene.add(aSource);
-                this.analyser = new THREE.AudioAnalyser( audio, fftSize );
+	    
+	    this.analyser = new THREE.AudioAnalyser( audio, fftSize );
 		
 		
 		/////////// 
 		
-		let audioSphere =  new THREE.SphereGeometry(80, 32, 32);
-		let audioSphereOrg =  new THREE.SphereGeometry(80, 32, 32);
+		let audioSphere =  new THREE.SphereGeometry(400, 32, 32);
+		let audioSphereOrg =  new THREE.SphereGeometry(400, 32, 32);
 		
 		
 		var audioMaterial = new THREE.MeshStandardMaterial({
@@ -284,8 +294,8 @@ const edges = {
                 sphere.geometry.normalsNeedUpdate = true;
                       
                 sphere.position.z = -500;
-                sphere.position.y = 200; 
-                      
+                sphere.position.y = 300; 
+            //sphere.rotation.x = Math.PI ;     
                 this.scene.add(sphere);
 		
 		this.sphere = sphere
@@ -299,6 +309,8 @@ const edges = {
 			refractionRatio: 0.95
 		} );
 
+
+	    /*
 		let geometryCli, cil1;
 
 		for(let i = 1; i < 14; i++){
@@ -310,22 +322,100 @@ const edges = {
 			this.scene.add( cil1 );
 		}
 
+	    */
 	},
 
-	addScreen: function(){
+    addScreen: function(){
 
-	    let screensGeometry = new THREE.PlaneGeometry( 100, 50, 8 );
+	this.clock = new THREE.Clock();
+	
+	var fireLoader = new THREE.TextureLoader();
+	//fireLoader.crossOrigin = '';
+	
+	var fireTex = fireLoader.load("/img/mor.png");
+	
+	    var wireframeMat = new THREE.MeshBasicMaterial({
+		color : new THREE.Color(0xffffff),
+		wireframe : true
+	    });
 
-	    let screen;
+
+	this.fire = new Fire(fireTex);
+	
+	var wireframe = new THREE.Mesh(this.fire.geometry, wireframeMat.clone());
+	this.fire.add(wireframe);
+	wireframe.visible = true;
+	wireframe.visible = false;
+	
+	console.log(this.fire);
+	//this.fire.position.set(0, 0, 0);
+	this.fire.position.y = 160;
+	this.fire.position.x = -200; 
+	this.fire.scale.x = 180;
+	this.fire.scale.y = 300;
+	this.fire.scale.z = 180; 
+	
+	this.fire.matrixWorldNeedsUpdate = true; 
+
+	this.scene.add(this.fire);
+
+	this.fire2 = new Fire(fireTex);
+	
+	var wireframe = new THREE.Mesh(this.fire2.geometry, wireframeMat.clone());
+	this.fire2.add(wireframe);
+	wireframe.visible = true;
+	wireframe.visible = false;
+	
+	console.log(this.fire);
+	//this.fire.position.set(0, 0, 0);
+	this.fire2.position.y = 160;
+	this.fire2.position.x = 200; 
+	this.fire2.scale.x = 180;
+	this.fire2.scale.y = 300;
+	this.fire2.scale.z = 180; 
+	
+	this.fire2.matrixWorldNeedsUpdate = true; 
+
+	this.scene.add(this.fire2);
+
+	
+	var aSourceMaterial = new THREE.MeshStandardMaterial( {
+	    
+	    color: 0xffffff,
+	    metalness: 0.9,
+	    roughness: 0.49,
+            //envmap: scene.background,
+            //side: THREE.DoubleSide,
+            // map: cityTexture,
+            //transparent: true,
+            //opacity: 0.75,
+        } );
+	
+	let aSourceGeometry = new THREE.BoxGeometry(100, 20, 100);
+
+        //aSource.add( positionalAudio ); // asociar el audio a una fuente
+
+	for(var i = 0; i < 2; i++){
+	    let aSource = new THREE.Mesh( aSourceGeometry, aSourceMaterial );
+	    aSource.position.x = -600 + ((i+1) *400);
+	 
+            this.scene.add(aSource);
+	 
+	}
+
+	    
+	let screensGeometry = new THREE.PlaneGeometry( 400, 200, 8 );
+	
+	let screen;
 	    
 		for(let i = 0; i < 3; i++){		
 		    screen = new THREE.Mesh(screensGeometry, this.zordonMaterial);
 		    
 		    screen.position.z = 200 + ((i+1)*200);
-		    screen.position.x = 150;
-		    screen.position.y = 25;
+		    screen.position.x = 40+(((3-i)+1)*150);
+		    screen.position.y = 100;
 		    
-		    screen.rotation.y = -Math.PI /2; 
+		    screen.rotation.y = -Math.PI; 
 		    
                     this.scene.add(screen);
 		}
@@ -335,10 +425,10 @@ const edges = {
 		    screen = new THREE.Mesh(screensGeometry, this.zordonMaterial);
 
 		    screen.position.z = 200 + ((i+1)*200);
-		    screen.position.x = -150;
-		    screen.position.y = 25;
+		    screen.position.x = -40+(((3-i)+1)* -150);
+		    screen.position.y = 100;
 		    
-		    screen.rotation.y = Math.PI /2; 
+		    screen.rotation.y = -Math.PI; 
 
 		    this.scene.add(screen);
 		}
@@ -347,7 +437,7 @@ const edges = {
 
 
     mkSat: function(){
-
+/*
 	// Satelite
 
 	let group = new THREE.Group();
@@ -450,11 +540,13 @@ const edges = {
 			  this.scene.add(edges.sats[i]);
 		      }
 
+*/
     },
 
     moveSat: function(){
 
-		var time = Date.now() * 0.0005;
+	/*
+	var time = Date.now() * 0.0005;
 
 	
 	for(var i = 0; i < 4; i++){
@@ -476,7 +568,7 @@ const edges = {
 	edges.sats[3].position.x = Math.sin( time * 0.3/2 ) * 400;
 	edges.sats[3].position.y = 500+Math.cos( time * 0.7/2 ) * 50;
 	edges.sats[3].position.z = 800+Math.sin( time * 0.5/2 ) * 400;
-
+*/
 	
     },
     
@@ -486,49 +578,57 @@ const edges = {
 		
 		for (let i = 0, len = edges.audioSphere.vertices.length; i < len; i++) {
 			//audioSphere.vertices[i].y = audioSphereOrg.vertices[i].y;
-                        edges.audioSphere.vertices[i].y = edges.audioSphereOrg.vertices[i].y * (1+data[i%128] / 128) ;
-                        edges.audioSphere.vertices[i].x = edges.audioSphereOrg.vertices[i].x * (1+data[i%128] / 128);
-                        edges.audioSphere.vertices[i].z = edges.audioSphereOrg.vertices[i].z * (1+data[i%128] / 128);
+                        edges.audioSphere.vertices[i].y = edges.audioSphereOrg.vertices[i].y * (1+data[i] / 256) ;
+                        edges.audioSphere.vertices[i].x = edges.audioSphereOrg.vertices[i].x * (1+data[i] / 256);
+                        edges.audioSphere.vertices[i].z = edges.audioSphereOrg.vertices[i].z * (1+data[i] / 256);
 		}
 
 	},
 	moveLight: function(){
-		var time = Date.now() * 0.0005;
+	    var time = Date.now() * 0.0005;
 		
-		edges.light1.position.x = Math.sin( time * 0.7 ) * 260;
-		edges.light1.position.y = 150 +Math.cos( time * 0.5 ) * 80+10;
-		edges.light1.position.z = Math.cos( time * 0.3 ) * 60 -500;
+	    edges.light1.position.x = Math.sin( time * 0.7 ) * 260;
+	    edges.light1.position.y = 150 +Math.cos( time * 0.5 ) * 80+10;
+	    edges.light1.position.z = Math.cos( time * 0.3 ) * 60 -500;
+	    
+	    edges.light2.position.x = Math.cos( time * 0.3 ) * 260;
+	    edges.light2.position.y = 150+Math.sin( time * 0.5 ) * 80 + 10;
+	    edges.light2.position.z = Math.sin( time * 0.7 ) * 60 -500;
+	    
+	    edges.light3.position.x = Math.sin( time * 0.7 ) * 230;
+	    edges.light3.position.y = 150+Math.cos( time * 0.3 ) * 40 + 10;
+	    edges.light3.position.z = Math.sin( time * 0.5 ) * 30 -500;
+	    
+	    edges.light4.position.x = Math.sin( time * 0.3 ) * 230;
+	    edges.light4.position.y = 150+Math.cos( time * 0.7 ) * 40 + 10;
+	    edges.light4.position.z = Math.sin( time * 0.5 ) * 30 -500;
+	    
+            // City lights
+	    
+	    edges.clight1.position.x = Math.sin( time * 0.7/2 ) * 400;
+	    edges.clight1.position.y = 500 +Math.cos( time * 0.5/2 ) * 50;
+	    edges.clight1.position.z = 800+Math.cos( time * 0.3/2 ) * 400;
 	
-		edges.light2.position.x = Math.cos( time * 0.3 ) * 260;
-		edges.light2.position.y = 150+Math.sin( time * 0.5 ) * 80 + 10;
-		edges.light2.position.z = Math.sin( time * 0.7 ) * 60 -500;
+            edges.clight2.position.x = Math.cos( time * 0.3/2 ) * 400;
+            edges.clight2.position.y = 500+Math.sin( time * 0.5/2 ) * 50;
+	    edges.clight2.position.z = 800+Math.sin( time * 0.7/2 ) * 400;
+	    
+	    edges.clight3.position.x = Math.cos( time * 0.7/2 ) * 400;
+	    edges.clight3.position.y = 500+Math.cos( time * 0.3/2 ) * 50;
+	    edges.clight3.position.z = 800+Math.sin( time * 0.5/2 ) * 400;
+	    
+	    edges.clight4.position.x = Math.sin( time * 0.3/2 ) * 400;
+	    edges.clight4.position.y = 500+Math.cos( time * 0.7/2 ) * 50;
+	    edges.clight4.position.z = 800+Math.sin( time * 0.5/2 ) * 400;
 
-		edges.light3.position.x = Math.sin( time * 0.7 ) * 230;
-		edges.light3.position.y = 150+Math.cos( time * 0.3 ) * 40 + 10;
-		edges.light3.position.z = Math.sin( time * 0.5 ) * 30 -500;
-
-		edges.light4.position.x = Math.sin( time * 0.3 ) * 230;
-		edges.light4.position.y = 150+Math.cos( time * 0.7 ) * 40 + 10;
-		edges.light4.position.z = Math.sin( time * 0.5 ) * 30 -500;
-
-                // City lights
-
-	edges.clight1.position.x = Math.sin( time * 0.7/2 ) * 400;
-	edges.clight1.position.y = 500 +Math.cos( time * 0.5/2 ) * 50;
-	edges.clight1.position.z = 800+Math.cos( time * 0.3/2 ) * 400;
-	
-        edges.clight2.position.x = Math.cos( time * 0.3/2 ) * 400;
-        edges.clight2.position.y = 500+Math.sin( time * 0.5/2 ) * 50;
-	edges.clight2.position.z = 800+Math.sin( time * 0.7/2 ) * 400;
-	
-	edges.clight3.position.x = Math.cos( time * 0.7/2 ) * 400;
-	edges.clight3.position.y = 500+Math.cos( time * 0.3/2 ) * 50;
-	edges.clight3.position.z = 800+Math.sin( time * 0.5/2 ) * 400;
-	
-	edges.clight4.position.x = Math.sin( time * 0.3/2 ) * 400;
-	edges.clight4.position.y = 500+Math.cos( time * 0.7/2 ) * 50;
-	edges.clight4.position.z = 800+Math.sin( time * 0.5/2 ) * 400;
-
+	    var delta = edges.clock.getDelta();
+	    
+	    //var t = clock.elapsedTime * controller.speed;
+	    var t = edges.clock.elapsedTime;
+	    edges.fire.update(t);
+	    edges.fire2.update(t);
+	    
+	    
 	},
 	move: function(){
 		const delta = 0.015
@@ -730,20 +830,19 @@ function onLock(){
 		onLoadMedia = null
 	}
 }
-
 function onUnlock(){
-	console.debug(document.activeElement,' aaaaaaaaaaaaaa');
         if(document.activeElement == document.querySelector("#inputMensaje")){
-		// mostrarChat()
-		document.querySelector("#inputMensaje").blur()
-		document.querySelector("#chat").style.display = 'none'
-		document.querySelector("body").focus();
-		edges.controls.lock()
-	}else{
-		document.querySelector("#instructions").style.display = "block";
-		document.querySelector("#blocker").style.display = "";
-	}
+                // mostrarChat()
+                document.querySelector("#inputMensaje").blur()
+                document.querySelector("#chat").style.display = 'none'
+                document.querySelector("body").focus();
+                edges.controls.lock()
+        }else{  
+                document.querySelector("#instructions").style.display = "block";
+                document.querySelector("#blocker").style.display = "";
+        }
 }
+
 
 function putChat(){
 	const from = Users[event.detail.from].nickname
@@ -775,12 +874,12 @@ function moveUser(event) {
 	const uuid = event.detail.uuid
 	const newPos = {
 		x: Users[uuid].position.x,
-		y: Users[uuid].position.y,
+		y: 0,//Users[uuid].position.y,
 		z: Users[uuid].position.z
 	}
 	const oldPos = {
 		x: personajes[uuid].position.x,
-		y: personajes[uuid].position.y,
+		y: 0,//personajes[uuid].position.y,
 		z: personajes[uuid].position.z
 	}
 
@@ -811,8 +910,10 @@ function moveUser(event) {
 
 function removeUser(event) {
 	const uuid = event.detail.uuid
-	personajes[uuid].geometry.dispose()
-	personajes[uuid].material.dispose()
+	personajes[uuid].remove(personajes[uuid].children[0]);
+	personajes[uuid].remove(personajes[uuid].children[1]);
+	personajes[uuid].remove(personajes[uuid].children[2]);
+
 	edges.scene.remove(personajes[uuid])
 	edges.renderer.renderLists.dispose()
 
@@ -821,43 +922,81 @@ function removeUser(event) {
 }
 
 function addUser(event) {
-	let uuid
-	if (event.detail.uuid === Users.me.uuid) {
-		uuid = 'me'
-	} else {
-		uuid = event.detail.uuid
-	}
-  
-        const position = Users[uuid].position
-	
-	const geom = new THREE.SphereBufferGeometry(5, 32, 32)
-	const mat = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-	const mimir = new THREE.Mesh(geom, mat)
-	
-	mimir.position.x = position.x
-	mimir.position.y = position.y
-	mimir.position.z = position.z
-        if(uuid == 'me'){
-		edges.camera.position.x = position.x
-		edges.camera.position.y = position.y
-		edges.camera.position.z = position.z
+        let uuid
+        if (event.detail.uuid === Users.me.uuid) {
+                uuid = 'me'
+        } else {
+                uuid = event.detail.uuid
         }
 
-	document.querySelector("#numUsuarios").textContent = Object.keys(Users).length
+        const position = Users[uuid].position
 
-       /* 
-	// model
-	console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	var loader = new THREE.FBXLoader();
-	loader.load( '/models/fbx/monito.fbx', function ( object ) {
-                personajes[uuid] = object
-                console.log("UWU")
+        const geom = new THREE.SphereBufferGeometry(5, 32, 32)
+        const mat = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+        const mimir = new THREE.Mesh(geom, mat)
 
-        });
-	*/
-	edges.scene.add( mimir );
-	personajes[uuid] = mimir
+        mimir.position.x = position.x
+        mimir.position.y = position.y
+        mimir.position.z = position.z
+        if(uuid == 'me'){
+                edges.camera.position.x = position.x
+                edges.camera.position.y = position.y
+                edges.camera.position.z = position.z
+        }
 
+        document.querySelector("#numUsuarios").textContent = Object.keys(Users).length
+
+    var loader = new GLTFLoader();
+
+    loader.load(
+        // resource URL
+        'models/hand.glb',
+        // called when the resource is loaded
+        function ( gltf ) {
+
+            gltf.scene.scale.set(10,10,10) // scale here
+
+            gltf.scene.position.x = position.x;
+            gltf.scene.position.y = 0//position.y-10;
+            gltf.scene.position.z = position.z;
+
+            edges.scene.add( gltf.scene );
+            personajes[uuid] = gltf.scene;
+
+             if(uuid == 'me'){
+                edges.camera.position.x = position.x
+                edges.camera.position.y = position.y
+                edges.camera.position.z = position.z
+        }
+
+
+            gltf.animations; // Array<THREE.AnimationClip>
+            gltf.scene; // THREE.Group
+            gltf.scenes; // Array<THREE.Group>
+            gltf.cameras; // Array<THREE.Camera>
+            gltf.asset; // Object
+
+        },
+    );
+
+
+}
+
+function renameUser(event){
+        let oldNickname = event.detail.oldNickname
+        let newNickname = event.detail.newNickname
+        content = `Usuarix "${oldNickname}" se llama ahora "${newNickname}"`
+        console.debug(content, '<-')
+        const mensaje = document.createElement('div')
+        mensaje.classList.add('mensaje')
+
+        const contenido = document.createElement('span')
+        contenido.classList.add('log')
+        contenido.textContent = content
+
+        mensaje.appendChild(contenido)
+
+        document.querySelector('#mensajes').appendChild(mensaje)
 }
 
 function cambiarNombre(e) {
@@ -876,7 +1015,6 @@ function cambiarNombrebutton (e) {
 	document.querySelector("#mostrarUsuarix").textContent = document.querySelector("#usuarix").value
 }
 
-
 function mandarMensaje(e) {
 	e.preventDefault()
 	const text = inputMensaje.textContent
@@ -884,7 +1022,7 @@ function mandarMensaje(e) {
 	inputMensaje.textContent = ''
 }
 
-function mostrarChat(e) {
+function mostrarChat(e){
 	e.preventDefault()
 	document.querySelector("#chat").style.display = document.querySelector("#chat").style.display == 'none' ? '' : 'none'
 }
@@ -903,15 +1041,21 @@ document.querySelector('#usuarix').addEventListener('keydown', cambiarNombre)
 document.querySelector("#instructions").addEventListener('click', ()=> edges.controls.lock())
 document.querySelector('#cambiarNombre').addEventListener('click', cambiarNombrebutton)
 document.querySelector('#mandarMensaje').addEventListener('click', mandarMensaje)
-
 document.querySelector("#mostrarChat").addEventListener('click', mostrarChat)
-
 
 window.addEventListener('addUser', addUser)
 window.addEventListener('removeUser', removeUser)
 window.addEventListener('moveUser', moveUser)
+window.addEventListener('renameUser', renameUser)
+
 window.addEventListener('putChat', putChat)
 
+window.addEventListener('blur', function(e){
+        if(!edges.controls.isLocked) return
+        document.querySelector("#chat").style.display = 'none'
+        document.querySelector("#instructions").style.display = "block";
+        document.querySelector("#blocker").style.display = "";
+})
 
 edges.init();
 Server.init();
