@@ -1,252 +1,111 @@
 <!DOCTYPE html>
-<html>
-  <title>PiranhaLab</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-<link rel="shortcut icon" href="img/favicon.ico">
-
-
-<style>
-
-  body {
-      background-color: white;
-      font-family: 'Montserrat';font-size: 16px;
-  }
-
-  .w3-container {
-    color: black;
-    background-color: white;
-    font-family: 'Montserrat';font-size: 16px;
-}
-
-.w3-container h2{
-    color: #3B1FE3;
-    font-family: 'Montserrat';font-size: 30px;
-}
-
-.w3-container h1{
-    color: #121212;
-    font-family: 'Montserrat';font-size: 40px;
-}
-
-
-.navbar {
-  overflow: hidden;
-  background-color: #121212;
-  font-family: 'Montserrat';font-size: 18px;
-}
-
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: #B4B4B4;
-  text-align: center;
-  padding: 8px 0px;
-  text-decoration: none;
-}
-
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: #141414;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: #blue;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #B4B4B4;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.forma{
-  display: inline-block;
-  margin: 16px;
-}
-
-#paralelogramo {
-   width: 100px; 
-   height: 150px;    
-   background: linear-gradient(165deg, #FF96FF, #3B1FE3, #01FFFF, #48E15E);
-   -webkit-transform: skew(40deg); 
-   -moz-transform: skew(40deg); 
-   -o-transform: skew(40deg); 
-}
-
-</style>
-
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piranhalab - Laboratorio de exploración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        /* Logo */
+        .logo {
+            margin-bottom: 30px;
+            width: 150px;
+            height: 150px;
+        }
+        
+        .logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        /* Títulos */
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            max-width: 600px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            .logo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
 <body>
-  
-<div class="navbar">
-  <!--<a href="#home">Home</a>-->
-      <a class="navbar-brand">
-        <img src="img/logo-03.png"  style="max-width:50px; margin-left:8px" alt="">
-        </a>
-  <div class="dropdown">
-    <button class="dropbtn"><a href="index.html">PiranhaLab</a> 
-      <i class=""></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="index.html#Nosotrxs">Nosotrxs</a>
-      <!--<a href="index.html#Colaboradorxs">Colaboradorxs</a>-->
-      <a href="index.html#Contacto">Contacto</a>
+    <div class="container">
+        <!-- Logo - reemplazar con ruta correcta a tu imagen -->
+        <div class="logo">
+            <img src="img/plab-logo.png" alt="PiranhaLab Logo">
+        </div>
+        
+        <h1>PiranhaLab</h1>
+        <h2>Laboratorio de exploración entre arte, tecnología y educación</h2>
     </div>
-  </div>
-  <div class="dropdown">
-    <button class="dropbtn"><a href="proyectos.html">Proyectos</a> 
-      <i class=""></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="proyectos.html#CCD-PADID">Talleres CCD-PADID</a>
-      <a href="proyectos.html#Orbit">Orbit</a>
-      <a href="proyectos.html#ofhawc#">ofhawc</a>
-    </div>
-  </div>
-  <div class="dropdown">
-    <button class="dropbtn"><a href="actividades.html">Actividades</a>
-      <i class=""></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="actividades.html#Proximas">Próximas</a>
-      <a href="actividades.html#Pasadas">Pasadas</a>
-    </div>
-  </div>
-  
-  <div class="dropdown">
-    <button class="dropbtn"><a href="media.html">Multimedia</a>
-      <i class=""></i>
-    </button>
-    <div class="dropdown-content">
-    </div>
-  </div>
-  
-  <div class="dropdown">
-    <button class="dropbtn"><a href="comunidad.html">Comunidad</a>
-      <i class=""></i>
-    </button>
-    <div class="dropdown-content">
-      <!--<a href="#">Próximos</a>-->
-    </div>
-  </div>
-
-<!--  <div class="dropdown">
-    <button class="dropbtn"><a href="comunidad.html">English</a>
-      <i class=""></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="#">Próximos</a>
-    </div>
-  </div> -->
-  <!--<a href="#home">Home</a>-->
-
-</div>
-
-<div class="w3-content" style="max-width:800px;margin-top:46px">
-
-  <section class="w3-display-container w3-left w3-padding-32" id="PiranhaLab">
-
-    <header class="w3-display-container w3-content w3-wide">
-      <div id="paralelogramo" class="forma" style="margin-left:80px"></div>
-
-  <div class="w3-display-left" style="margin-left:22px; color:#121212">
-    <h1 class="">PiranhaLab</h1>
-  </div>
-</header>
     
-    <!--<h1 class="">PiranhaLab</h1>-->
-    <p></p> <!-- tal vez cambiar esto -->
-  </section>
-  
-  <section class="w3-container w3-left w3-padding-16" id="Nosotrxs">
-    <h2 class="">Nosotrxs</h2>
-
-    <p>PiranhaLab es un laboratorio interdisciplinario que trabaja en las tripas del software.</p> <!-- tal vez cambiar esto -->
-    <p>El laboratorio tiene como objetivo impulsar la práctica, el desarrollo, la investigación y la difusión de software orientado a la creación audiovisual. Enfoca su actividad en la comunidad que practica la Programación al Vuelo o Live Coding en México y Latinoamérica.</p>
-    <a href="https://marianneteixido.github.io"><p>Marianne Teixido</p></a>
-    <a href="https://github.com/rexmalebka/"><p>Dorian Sotomayor</p></a>
-    <a href="https://emilioocelotl.github.io"><p>Emilio Ocelotl</p></a>
-  </section>
-
-  <!--
-  <section class="w3-container w3-left w3-padding-32" id="Colaboradorxs">
-    <h2 class="w3-wide">Colaboradorxs y amigxs</h2>
-    <p>Colaboramos con personas dedicadas a la programación, música, artes visuales, diseño e investigación. Algunxs de los colaboradorxs más recientes se encuentran a continuación.</p>
-    <article class="w3-third w3-center">
-      <p>Laboratorio de Tecnologías Libres</p>
-      <a href="https://www.centroculturadigital.mx/areas_beta"><img src="https://www.centroculturadigital.mx/imgs/areas/tec-libres.png" alt="" style="width:80%"></a>
-      <p></p>
-    </article>
-        <article class="w3-third w3-center">
-      <p>RGGTRN</p>
-      <a href="https://github.com/rggtrn"><img src="https://avatars3.githubusercontent.com/u/28249257?s=400&v=4" alt="" style="width:80%"></a>
-      <p></p>
-    </article>
-    <article class="w3-third w3-center">
-      <p>LiveCodeNet Ensamble</p>
-      <img src="https://avatars1.githubusercontent.com/u/11905873?s=400&u=50f05004cca4208fbe27bba9800ff12a699394d0&v=4" alt="" style="width:80%">
-      <p></p>
-      </article>
-  </section>
-  -->
-  
-  <section class="w3-container w3-left w3-padding-32 w3-justify" id="Contacto">
-    <h2 class="">Contacto</h2>
-    <p>
-      Correo electrónico:
-      <a href="mailto:piranha.laboratorio@gmail.com">piranha.laboratorio@gmail.com</a>
-    </p>
-    <br>
-  </section>
-
-<!-- Container (Contact Section) -->
-</div>
-
-
-<!-- Footer -->
-<footer class="w3-container w3-padding-48 w3-center w3-xxlarge">
-  <a href="https://www.facebook.com/piranhalab/"><i class="fa fa-facebook-official"></i></a>
-  <a href="https://github.com/piranhalab"><i class="fa fa-github"></i></a>
-  <a href="https://www.instagram.com/piranhalab/"><i class="fa fa-instagram"></i></a>
-  <a href="https://vimeo.com/piranhalab"><i class="fa fa-vimeo"></i></a>
-  <a href="mailto:piranha.laboratorio@gmail.com"><i class="fa fa-envelope"></i></a>
-  <p class="w3-large"><*(((-{</p>
-</footer>
-
-
+    <footer>
+        <p><*(((-{</p>
+    </footer>
 </body>
 </html>
