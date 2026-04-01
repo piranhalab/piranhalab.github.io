@@ -1,815 +1,941 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PiranhaLab — Laboratorio de experimentación entre arte, tecnología y educación</title>
-<style>
-  :root {
-    --paper: #f0ebe3;
-    --ink:   #111111;
-    --border: #111111;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background-color: var(--paper);
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    background-attachment: fixed;
-    color: var(--ink);
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2.5rem;
-    background: rgba(240,235,227,0.92);
-    border-bottom: 1.5px solid var(--border);
-    backdrop-filter: blur(6px);
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    text-decoration: none;
-    color: var(--ink);
-  }
-
-  .nav-logo img {
-    height: 32px;
-    width: 32px;
-    object-fit: contain;
-    filter: invert(0);
-  }
-
-  .nav-brand {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    line-height: 1.2;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ink);
-    opacity: 0.45;
-    transition: opacity 0.2s;
-  }
-
-  .nav-links a:hover { opacity: 1; }
-
-  /* ── SHARED LAYOUT ── */
-  .container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-
-  section { border-bottom: 1.5px solid var(--border); }
-
-  .section-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 6rem 2.5rem;
-  }
-
-  .section-number {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.35;
-    margin-bottom: 0.4rem;
-  }
-
-  .section-title {
-    font-size: clamp(2.2rem, 5vw, 4.5rem);
-    font-weight: 900;
-    line-height: 0.95;
-    text-transform: uppercase;
-    letter-spacing: -0.025em;
-    margin-bottom: 2.5rem;
-  }
-
-  /* ── HERO ── */
-  #inicio {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    border-bottom: 1.5px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 9rem 2.5rem 5rem;
-    width: 100%;
-  }
-
-  .hero-eyebrow {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    opacity: 0.4;
-    margin-bottom: 1.8rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .hero-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 2rem;
-    height: 1.5px;
-    background: var(--ink);
-    opacity: 0.5;
-  }
-
-  .hero-title {
-    font-size: clamp(4rem, 12vw, 11rem);
-    font-weight: 900;
-    line-height: 0.88;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    margin-bottom: 2.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(0.95rem, 1.5vw, 1.15rem);
-    max-width: 52ch;
-    line-height: 1.65;
-    opacity: 0.6;
-    margin-bottom: 3rem;
-  }
-
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ink);
-    border-bottom: 1.5px solid var(--ink);
-    padding-bottom: 0.2rem;
-    transition: opacity 0.2s;
-  }
-
-  .hero-cta:hover { opacity: 0.5; }
-
-  /* decorative elements */
-  .deco-dots {
-    position: absolute;
-    bottom: 4rem;
-    right: 2.5rem;
-    display: grid;
-    grid-template-columns: repeat(8, 6px);
-    grid-template-rows: repeat(6, 6px);
-    gap: 6px;
-    opacity: 0.12;
-  }
-
-  .deco-dots span {
-    width: 2px;
-    height: 2px;
-    background: var(--ink);
-    border-radius: 50%;
-    display: block;
-  }
-
-  .hero-glyph {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 2.5rem;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    opacity: 0.2;
-  }
-
-  .deco-lines {
-    position: absolute;
-    top: 5rem;
-    right: 3rem;
-    opacity: 0.1;
-    pointer-events: none;
-  }
-
-  /* ── QUÉ HACEMOS ── */
-  .premisa-block {
-    border: 1.5px solid var(--border);
-    padding: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .premisa-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.4;
-    margin-bottom: 0.75rem;
-  }
-
-  .premisa-text {
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    font-weight: 700;
-    line-height: 1.35;
-    letter-spacing: -0.01em;
-  }
-
-  .pilares-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1.5px solid var(--border);
-  }
-
-  .pilar-card {
-    padding: 2rem;
-    border-right: 1.5px solid var(--border);
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .pilar-card:last-child { border-right: none; }
-
-  .pilar-card:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .pilar-num {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    opacity: 0.35;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-
-  .pilar-title {
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    margin-bottom: 0.6rem;
-  }
-
-  .pilar-desc {
-    font-size: 0.83rem;
-    line-height: 1.65;
-    opacity: 0.6;
-  }
-
-  .pilar-card:hover .pilar-desc { opacity: 0.75; }
-
-  /* ── METODOLOGÍA ── */
-  .metodos-list {
-    list-style: none;
-    border: 1.5px solid var(--border);
-  }
-
-  .metodo-item {
-    display: grid;
-    grid-template-columns: 4rem 1fr;
-    border-bottom: 1.5px solid var(--border);
-    transition: background 0.15s, color 0.15s;
-  }
-
-  .metodo-item:last-child { border-bottom: none; }
-
-  .metodo-item:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .metodo-num {
-    padding: 2rem;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    opacity: 0.35;
-    border-right: 1.5px solid var(--border);
-    display: flex;
-    align-items: flex-start;
-    padding-top: 2.2rem;
-    text-transform: uppercase;
-  }
-
-  .metodo-item:hover .metodo-num { border-right-color: rgba(240,235,227,0.3); }
-
-  .metodo-body {
-    padding: 2rem;
-  }
-
-  .metodo-title {
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    margin-bottom: 0.5rem;
-  }
-
-  .metodo-desc {
-    font-size: 0.85rem;
-    opacity: 0.6;
-    line-height: 1.65;
-  }
-
-  .metodo-item:hover .metodo-desc { opacity: 0.75; }
-
-  /* ── PROYECTOS ── */
-  .proyectos-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    border: 1.5px solid var(--border);
-  }
-
-  .proyecto-card {
-    border-right: 1.5px solid var(--border);
-    border-bottom: 1.5px solid var(--border);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .proyecto-card:nth-child(even) { border-right: none; }
-  .proyecto-card:nth-last-child(-n+2) { border-bottom: none; }
-
-  .proyecto-img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(100%);
-    transition: filter 0.35s;
-  }
-
-  .proyecto-card:hover .proyecto-img { filter: grayscale(20%); }
-
-  .proyecto-no-img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background: var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .proyecto-no-img span {
-    color: var(--paper);
-    font-size: 2rem;
-    opacity: 0.15;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-  }
-
-  .proyecto-body {
-    padding: 1.8rem;
-  }
-
-  .proyecto-tags {
-    display: flex;
-    gap: 0.4rem;
-    margin-bottom: 0.8rem;
-    flex-wrap: wrap;
-  }
-
-  .proyecto-tag {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.6rem;
-    border: 1.5px solid var(--border);
-    opacity: 0.55;
-  }
-
-  .proyecto-title {
-    font-size: 1.05rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.5rem;
-    line-height: 1.1;
-  }
-
-  .proyecto-desc {
-    font-size: 0.83rem;
-    opacity: 0.6;
-    line-height: 1.65;
-  }
-
-  /* ── CONTACTO ── */
-  #contacto .section-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    align-items: start;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
-  .contacto-left { padding-right: 4rem; }
-
-  .contacto-right {
-    border-left: 1.5px solid var(--border);
-    padding-left: 4rem;
-  }
-
-  .email-block {
-    margin-top: 1.5rem;
-  }
-
-  .email-label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.4;
-    margin-bottom: 0.4rem;
-  }
-
-  .email-link {
-    font-size: 1.2rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 2px solid var(--ink);
-    transition: opacity 0.2s;
-  }
-
-  .email-link:hover { opacity: 0.5; }
-
-  .contacto-desc {
-    font-size: 0.88rem;
-    opacity: 0.6;
-    line-height: 1.7;
-    max-width: 42ch;
-    margin-top: 1rem;
-  }
-
-  /* redes — right column */
-  .redes-title {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.4;
-    margin-bottom: 1.5rem;
-  }
-
-  .personas-list { list-style: none; }
-
-  .persona-item {
-    padding: 1.5rem 0;
-    border-bottom: 1.5px solid rgba(17,17,17,0.15);
-  }
-
-  .persona-item:last-child { border-bottom: none; }
-
-  .persona-name {
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.25rem;
-  }
-
-  .persona-role {
-    font-size: 0.7rem;
-    opacity: 0.4;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.4rem;
-  }
-
-  .persona-links {
-    display: flex;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-  }
-
-  .persona-links a {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: none;
-    opacity: 0.5;
-    transition: opacity 0.2s;
-    letter-spacing: 0.05em;
-  }
-
-  .persona-links a:hover { opacity: 1; }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1.5px solid var(--border);
-    padding: 2rem 2.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .footer-left {
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    opacity: 0.4;
-  }
-
-  .footer-glyph {
-    font-size: 1.1rem;
-    opacity: 0.2;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-  }
-
-  .footer-right {
-    font-size: 0.68rem;
-    opacity: 0.4;
-    letter-spacing: 0.05em;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-in { opacity: 0; animation: fadeUp 0.55s ease forwards; }
-  .d1 { animation-delay: 0.05s; }
-  .d2 { animation-delay: 0.18s; }
-  .d3 { animation-delay: 0.32s; }
-  .d4 { animation-delay: 0.46s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 720px) {
-    nav { padding: 0.8rem 1.2rem; }
-    .nav-links { gap: 1rem; }
-    .nav-links a { font-size: 0.62rem; }
-    .section-inner { padding: 4rem 1.2rem; }
-    .hero-inner { padding: 8rem 1.2rem 4rem; }
-
-    .pilares-grid { grid-template-columns: 1fr; }
-    .pilar-card { border-right: none; border-bottom: 1.5px solid var(--border); }
-    .pilar-card:last-child { border-bottom: none; }
-
-    .proyectos-grid { grid-template-columns: 1fr; }
-    .proyecto-card { border-right: none; }
-    .proyecto-card:nth-last-child(-n+2) { border-bottom: 1.5px solid var(--border); }
-    .proyecto-card:last-child { border-bottom: none; }
-
-    #contacto .section-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .contacto-left { padding-right: 0; }
-    .contacto-right { border-left: none; border-top: 1.5px solid var(--border); padding-left: 0; padding-top: 2rem; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiranhaLab — Laboratorio de experimentación entre arte, tecnología y educación</title>
+    <style>
+        :root {
+            --paper: #f0ebe3;
+            --ink: #111111;
+            --border: #111111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--paper);
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-attachment: fixed;
+            color: var(--ink);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2.5rem;
+            background: rgba(240, 235, 227, 0.92);
+            border-bottom: 1.5px solid var(--border);
+            backdrop-filter: blur(6px);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--ink);
+        }
+
+        .nav-logo img {
+            height: 32px;
+            width: 32px;
+            object-fit: contain;
+            filter: invert(0);
+        }
+
+        .nav-brand {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink);
+            opacity: 0.45;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* ── SHARED LAYOUT ── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+
+        section {
+            border-bottom: 1.5px solid var(--border);
+        }
+
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 6rem 2.5rem;
+        }
+
+        .section-number {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.35;
+            margin-bottom: 0.4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 5vw, 4.5rem);
+            font-weight: 900;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── HERO ── */
+        #inicio {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            border-bottom: 1.5px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 9rem 2.5rem 5rem;
+            width: 100%;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 2rem;
+            height: 1.5px;
+            background: var(--ink);
+            opacity: 0.5;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 11rem);
+            font-weight: 900;
+            line-height: 0.88;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+            max-width: 52ch;
+            line-height: 1.65;
+            opacity: 0.6;
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink);
+            border-bottom: 1.5px solid var(--ink);
+            padding-bottom: 0.2rem;
+            transition: opacity 0.2s;
+        }
+
+        .hero-cta:hover {
+            opacity: 0.5;
+        }
+
+        /* decorative elements */
+        .deco-dots {
+            position: absolute;
+            bottom: 4rem;
+            right: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(8, 6px);
+            grid-template-rows: repeat(6, 6px);
+            gap: 6px;
+            opacity: 0.12;
+        }
+
+        .deco-dots span {
+            width: 2px;
+            height: 2px;
+            background: var(--ink);
+            border-radius: 50%;
+            display: block;
+        }
+
+        .hero-glyph {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 2.5rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            opacity: 0.2;
+        }
+
+        .deco-lines {
+            position: absolute;
+            top: 5rem;
+            right: 3rem;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* ── QUÉ HACEMOS ── */
+        .premisa-block {
+            border: 1.5px solid var(--border);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .premisa-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 0.75rem;
+        }
+
+        .premisa-text {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 700;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+        }
+
+        .pilares-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border: 1.5px solid var(--border);
+        }
+
+        .pilar-card {
+            padding: 2rem;
+            border-right: 1.5px solid var(--border);
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .pilar-card:last-child {
+            border-right: none;
+        }
+
+        .pilar-card:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .pilar-num {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            opacity: 0.35;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .pilar-title {
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.6rem;
+        }
+
+        .pilar-desc {
+            font-size: 0.83rem;
+            line-height: 1.65;
+            opacity: 0.6;
+        }
+
+        .pilar-card:hover .pilar-desc {
+            opacity: 0.75;
+        }
+
+        /* ── METODOLOGÍA ── */
+        .metodos-list {
+            list-style: none;
+            border: 1.5px solid var(--border);
+        }
+
+        .metodo-item {
+            display: grid;
+            grid-template-columns: 4rem 1fr;
+            border-bottom: 1.5px solid var(--border);
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .metodo-item:last-child {
+            border-bottom: none;
+        }
+
+        .metodo-item:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .metodo-num {
+            padding: 2rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            opacity: 0.35;
+            border-right: 1.5px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            padding-top: 2.2rem;
+            text-transform: uppercase;
+        }
+
+        .metodo-item:hover .metodo-num {
+            border-right-color: rgba(240, 235, 227, 0.3);
+        }
+
+        .metodo-body {
+            padding: 2rem;
+        }
+
+        .metodo-title {
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .metodo-desc {
+            font-size: 0.85rem;
+            opacity: 0.6;
+            line-height: 1.65;
+        }
+
+        .metodo-item:hover .metodo-desc {
+            opacity: 0.75;
+        }
+
+        /* ── PROYECTOS ── */
+        .proyectos-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1.5px solid var(--border);
+        }
+
+        .proyecto-card {
+            border-right: 1.5px solid var(--border);
+            border-bottom: 1.5px solid var(--border);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .proyecto-card:nth-child(even) {
+            border-right: none;
+        }
+
+        .proyecto-card:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .proyecto-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(100%);
+            transition: filter 0.35s;
+        }
+
+        .proyecto-card:hover .proyecto-img {
+            filter: grayscale(20%);
+        }
+
+        .proyecto-no-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .proyecto-no-img span {
+            color: var(--paper);
+            font-size: 2rem;
+            opacity: 0.15;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+
+        .proyecto-body {
+            padding: 1.8rem;
+        }
+
+        .proyecto-tags {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .proyecto-tag {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.6rem;
+            border: 1.5px solid var(--border);
+            opacity: 0.55;
+        }
+
+        .proyecto-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .proyecto-desc {
+            font-size: 0.83rem;
+            opacity: 0.6;
+            line-height: 1.65;
+        }
+
+        /* ── CONTACTO ── */
+        #contacto .section-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            align-items: start;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        .contacto-left {
+            padding-right: 4rem;
+        }
+
+        .contacto-right {
+            border-left: 1.5px solid var(--border);
+            padding-left: 4rem;
+        }
+
+        .email-block {
+            margin-top: 1.5rem;
+        }
+
+        .email-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 0.4rem;
+        }
+
+        .email-link {
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 2px solid var(--ink);
+            transition: opacity 0.2s;
+        }
+
+        .email-link:hover {
+            opacity: 0.5;
+        }
+
+        .contacto-desc {
+            font-size: 0.88rem;
+            opacity: 0.6;
+            line-height: 1.7;
+            max-width: 42ch;
+            margin-top: 1rem;
+        }
+
+        /* redes — right column */
+        .redes-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.4;
+            margin-bottom: 1.5rem;
+        }
+
+        .personas-list {
+            list-style: none;
+        }
+
+        .persona-item {
+            padding: 1.5rem 0;
+            border-bottom: 1.5px solid rgba(17, 17, 17, 0.15);
+        }
+
+        .persona-item:last-child {
+            border-bottom: none;
+        }
+
+        .persona-name {
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.25rem;
+        }
+
+        .persona-role {
+            font-size: 0.7rem;
+            opacity: 0.4;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+        }
+
+        .persona-links {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .persona-links a {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--ink);
+            text-decoration: none;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            letter-spacing: 0.05em;
+        }
+
+        .persona-links a:hover {
+            opacity: 1;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1.5px solid var(--border);
+            padding: 2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-left {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.4;
+        }
+
+        .footer-glyph {
+            font-size: 1.1rem;
+            opacity: 0.2;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        .footer-right {
+            font-size: 0.68rem;
+            opacity: 0.4;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeUp 0.55s ease forwards;
+        }
+
+        .d1 {
+            animation-delay: 0.05s;
+        }
+
+        .d2 {
+            animation-delay: 0.18s;
+        }
+
+        .d3 {
+            animation-delay: 0.32s;
+        }
+
+        .d4 {
+            animation-delay: 0.46s;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 720px) {
+            nav {
+                padding: 0.8rem 1.2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.62rem;
+            }
+
+            .section-inner {
+                padding: 4rem 1.2rem;
+            }
+
+            .hero-inner {
+                padding: 8rem 1.2rem 4rem;
+            }
+
+            .pilares-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pilar-card {
+                border-right: none;
+                border-bottom: 1.5px solid var(--border);
+            }
+
+            .pilar-card:last-child {
+                border-bottom: none;
+            }
+
+            .proyectos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .proyecto-card {
+                border-right: none;
+            }
+
+            .proyecto-card:nth-last-child(-n+2) {
+                border-bottom: 1.5px solid var(--border);
+            }
+
+            .proyecto-card:last-child {
+                border-bottom: none;
+            }
+
+            #contacto .section-inner {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contacto-left {
+                padding-right: 0;
+            }
+
+            .contacto-right {
+                border-left: none;
+                border-top: 1.5px solid var(--border);
+                padding-left: 0;
+                padding-top: 2rem;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#inicio">
-    <img src="https://piranhalab.cc/img/plab-logo.png" alt="PiranhaLab Logo">
-    <span class="nav-brand">Piranha<br>Lab</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#que-hacemos">Qué hacemos</a></li>
-    <li><a href="#metodologia">Metodología</a></li>
-    <li><a href="#proyectos">Proyectos</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-</nav>
+    <!-- NAV -->
+    <nav>
+        <a class="nav-logo" href="#inicio">
+            <img src="https://piranhalab.cc/img/plab-logo.png" alt="PiranhaLab Logo">
+            <span class="nav-brand">Piranha<br>Lab</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#que-hacemos">Qué hacemos</a></li>
+            <li><a href="#metodologia">Metodología</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
 
-<!-- HERO -->
-<section id="inicio">
-  <div class="hero-inner">
-    <p class="hero-eyebrow fade-in d1">Laboratorio de exploración</p>
-    <h1 class="hero-title fade-in d2">Piranha<br>Lab</h1>
-    <p class="hero-subtitle fade-in d3">Laboratorio de experimentación entre arte, tecnología y educación.</p>
-    <a class="hero-cta fade-in d4" href="#que-hacemos">Explorar →</a>
-  </div>
-
-  <!-- decorative dots -->
-  <div class="deco-dots">
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-  </div>
-
-  <!-- diagonal lines deco -->
-  <div class="deco-lines">
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="10" y1="0"  x2="120" y2="110" stroke="#111" stroke-width="1.5"/>
-      <line x1="30" y1="0"  x2="120" y2="90"  stroke="#111" stroke-width="1.5"/>
-      <line x1="50" y1="0"  x2="120" y2="70"  stroke="#111" stroke-width="1.5"/>
-      <line x1="70" y1="0"  x2="120" y2="50"  stroke="#111" stroke-width="1.5"/>
-      <line x1="90" y1="0"  x2="120" y2="30"  stroke="#111" stroke-width="1.5"/>
-      <line x1="110" y1="0" x2="120" y2="10"  stroke="#111" stroke-width="1.5"/>
-    </svg>
-  </div>
-
-  <div class="hero-glyph">&lt;*(((-{</div>
-</section>
-
-<!-- QUÉ HACEMOS -->
-<section id="que-hacemos">
-  <div class="section-inner">
-    <p class="section-number">01</p>
-    <h2 class="section-title">¿Qué hacemos?</h2>
-
-    <div class="premisa-block">
-      <p class="premisa-label">Premisa</p>
-      <p class="premisa-text">PiranhaLab investiga, práctica y cuestiona desde el software.<br>
-        Todas las personas pueden ser creadoras y programadoras, no sólo usuarias.</p>
-    </div>
-
-    <div class="pilares-grid">
-      <div class="pilar-card">
-        <p class="pilar-num">Pilar 01</p>
-        <h3 class="pilar-title">DIY / DIWO</h3>
-        <p class="pilar-desc">Como proceso de enseñanza y aprendizaje. Hacer por unx mismx y hacer junto a otrxs.</p>
-      </div>
-      <div class="pilar-card">
-        <p class="pilar-num">Pilar 02</p>
-        <h3 class="pilar-title">Software Libre</h3>
-        <p class="pilar-desc">El software libre como herramienta para democratizar la expresión y el pensamiento crítico. Esta postura abre puertas a traspasar la frontera entre consumo y creación.</p>
-      </div>
-      <div class="pilar-card">
-        <p class="pilar-num">Pilar 03</p>
-        <h3 class="pilar-title">Educación experimental</h3>
-        <p class="pilar-desc">Talleres y programas que fomentan el pensamiento crítico y la creación colaborativa.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- METODOLOGÍA -->
-<section id="metodologia">
-  <div class="section-inner">
-    <p class="section-number">02</p>
-    <h2 class="section-title">Metodologías</h2>
-    <p style="opacity:0.5; font-size:0.85rem; margin-bottom:2rem; letter-spacing:0.05em;">Procesos y retroalimentación</p>
-
-    <ul class="metodos-list">
-      <li class="metodo-item">
-        <span class="metodo-num">1</span>
-        <div class="metodo-body">
-          <h3 class="metodo-title">Actualización y aprendizaje constante</h3>
-          <p class="metodo-desc">Actualización técnica, conceptual, cultural, social y política.</p>
+    <!-- HERO -->
+    <section id="inicio">
+        <div class="hero-inner">
+            <p class="hero-eyebrow fade-in d1">Laboratorio de exploración</p>
+            <h1 class="hero-title fade-in d2">Piranha<br>Lab</h1>
+            <p class="hero-subtitle fade-in d3">Laboratorio de experimentación entre arte, tecnología y educación.</p>
+            <a class="hero-cta fade-in d4" href="#que-hacemos">Explorar →</a>
         </div>
-      </li>
-      <li class="metodo-item">
-        <span class="metodo-num">2</span>
-        <div class="metodo-body">
-          <h3 class="metodo-title">Laboratorios de experimentación</h3>
-          <p class="metodo-desc">Improvisación y experimentación como aprendizaje por práctica.</p>
+
+        <!-- decorative dots -->
+        <div class="deco-dots">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
-      </li>
-      <li class="metodo-item">
-        <span class="metodo-num">3</span>
-        <div class="metodo-body">
-          <h3 class="metodo-title">Documentación descentralizada</h3>
-          <p class="metodo-desc">Control de versiones, redes sociales, páginas web.</p>
+
+        <!-- diagonal lines deco -->
+        <div class="deco-lines">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="10" y1="0" x2="120" y2="110" stroke="#111" stroke-width="1.5" />
+                <line x1="30" y1="0" x2="120" y2="90" stroke="#111" stroke-width="1.5" />
+                <line x1="50" y1="0" x2="120" y2="70" stroke="#111" stroke-width="1.5" />
+                <line x1="70" y1="0" x2="120" y2="50" stroke="#111" stroke-width="1.5" />
+                <line x1="90" y1="0" x2="120" y2="30" stroke="#111" stroke-width="1.5" />
+                <line x1="110" y1="0" x2="120" y2="10" stroke="#111" stroke-width="1.5" />
+            </svg>
         </div>
-      </li>
-      <li class="metodo-item">
-        <span class="metodo-num">4</span>
-        <div class="metodo-body">
-          <h3 class="metodo-title">Investigación artística</h3>
-          <p class="metodo-desc">Vínculo entre la investigación y reflexión desde las artes y la docencia.</p>
+
+        <div class="hero-glyph">&lt;*(((-{</div>
+    </section>
+
+    <!-- QUÉ HACEMOS -->
+    <section id="que-hacemos">
+        <div class="section-inner">
+            <p class="section-number">01</p>
+            <h2 class="section-title">¿Qué hacemos?</h2>
+
+            <div class="premisa-block">
+                <p class="premisa-label">Premisa</p>
+                <p class="premisa-text">PiranhaLab investiga, práctica y cuestiona desde el software.<br>
+                    Todas las personas pueden ser creadoras y programadoras, no sólo usuarias.</p>
+            </div>
+
+            <div class="pilares-grid">
+                <div class="pilar-card">
+                    <p class="pilar-num">Pilar 01</p>
+                    <h3 class="pilar-title">DIY / DIWO</h3>
+                    <p class="pilar-desc">Como proceso de enseñanza y aprendizaje. Hacer por unx mismx y hacer junto a
+                        otrxs.</p>
+                </div>
+                <div class="pilar-card">
+                    <p class="pilar-num">Pilar 02</p>
+                    <h3 class="pilar-title">Software Libre</h3>
+                    <p class="pilar-desc">El software libre como herramienta para democratizar la expresión y el
+                        pensamiento crítico. Esta postura abre puertas a traspasar la frontera entre consumo y creación.
+                    </p>
+                </div>
+                <div class="pilar-card">
+                    <p class="pilar-num">Pilar 03</p>
+                    <h3 class="pilar-title">Educación experimental</h3>
+                    <p class="pilar-desc">Talleres y programas que fomentan el pensamiento crítico y la creación
+                        colaborativa.</p>
+                </div>
+            </div>
         </div>
-      </li>
-    </ul>
-  </div>
-</section>
+    </section>
 
-<!-- PROYECTOS -->
-<section id="proyectos">
-  <div class="section-inner">
-    <p class="section-number">03</p>
-    <h2 class="section-title">Proyectos</h2>
+    <!-- METODOLOGÍA -->
+    <section id="metodologia">
+        <div class="section-inner">
+            <p class="section-number">02</p>
+            <h2 class="section-title">Metodologías</h2>
+            <p style="opacity:0.5; font-size:0.85rem; margin-bottom:2rem; letter-spacing:0.05em;">Procesos y
+                retroalimentación</p>
 
-    <div class="proyectos-grid">
-
-      <div class="proyecto-card">
-        <img class="proyecto-img"
-             src="https://piranhalab.cc/img/conversatorio.jpg"
-             alt="Ciclo de talleres en el CCD">
-        <div class="proyecto-body">
-          <div class="proyecto-tags">
-            <span class="proyecto-tag">Arte</span>
-            <span class="proyecto-tag">Tecnología</span>
-          </div>
-          <h3 class="proyecto-title">Ciclo de talleres en el CCD</h3>
-          <p class="proyecto-desc">En este espacio se presentaron bibliotecas personalizadas de personas que practican la programación al vuelo o live coding.</p>
+            <ul class="metodos-list">
+                <li class="metodo-item">
+                    <span class="metodo-num">1</span>
+                    <div class="metodo-body">
+                        <h3 class="metodo-title">Actualización y aprendizaje constante</h3>
+                        <p class="metodo-desc">Actualización técnica, conceptual, cultural, social y política.</p>
+                    </div>
+                </li>
+                <li class="metodo-item">
+                    <span class="metodo-num">2</span>
+                    <div class="metodo-body">
+                        <h3 class="metodo-title">Laboratorios de experimentación</h3>
+                        <p class="metodo-desc">Improvisación y experimentación como aprendizaje por práctica.</p>
+                    </div>
+                </li>
+                <li class="metodo-item">
+                    <span class="metodo-num">3</span>
+                    <div class="metodo-body">
+                        <h3 class="metodo-title">Documentación descentralizada</h3>
+                        <p class="metodo-desc">Control de versiones, redes sociales, páginas web.</p>
+                    </div>
+                </li>
+                <li class="metodo-item">
+                    <span class="metodo-num">4</span>
+                    <div class="metodo-body">
+                        <h3 class="metodo-title">Investigación artística</h3>
+                        <p class="metodo-desc">Vínculo entre la investigación y reflexión desde las artes y la docencia.
+                        </p>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </div>
+    </section>
 
-      <div class="proyecto-card">
-        <div class="proyecto-no-img"><span>&lt;*(((-{</span></div>
-        <div class="proyecto-body">
-          <div class="proyecto-tags">
-            <span class="proyecto-tag">Educación</span>
-            <span class="proyecto-tag">Tecnología</span>
-          </div>
-          <h3 class="proyecto-title">Pedagogías interdisciplinares en las artes</h3>
-          <p class="proyecto-desc">Estos espacios han servido como motivos para poner en práctica el trabajo experimental por proyectos.</p>
+    <!-- PROYECTOS -->
+    <section id="proyectos">
+        <div class="section-inner">
+            <p class="section-number">03</p>
+            <h2 class="section-title">Proyectos</h2>
+
+            <div class="proyectos-grid">
+                <div class="proyecto-card">
+                    <div class="proyecto-no-img"><span>&lt;*(((-{</span></div>
+                    <div class="proyecto-body">
+                        <div class="proyecto-tags">
+                            <span class="proyecto-tag">Educación</span>
+                            <span class="proyecto-tag">Arte</span>
+                            <span class="proyecto-tag">Territorio</span>
+                        </div>
+                        <h3 class="proyecto-title">Tecnologías Cotidianas para Documentar el Territorio</h3>
+                        <p class="proyecto-desc">Taller-laboratorio para promotores culturales. Reunión Nacional de
+                            Cultura Infantil 2026 — Alas y Raíces, Puebla.</p>
+                        <a href="talleres/tecnologias-cotidianas.html" style="display:inline-block; margin-top:1rem; font-size:0.7rem; font-weight:700;
+              letter-spacing:0.12em; text-transform:uppercase; color:var(--ink);
+              border-bottom:1.5px solid var(--ink); text-decoration:none; opacity:0.6;
+              transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+                            Ver taller →
+                        </a>
+                    </div>
+                </div>
+                <div class="proyecto-card">
+                    <img class="proyecto-img" src="https://piranhalab.cc/img/conversatorio.jpg"
+                        alt="Ciclo de talleres en el CCD">
+                    <div class="proyecto-body">
+                        <div class="proyecto-tags">
+                            <span class="proyecto-tag">Arte</span>
+                            <span class="proyecto-tag">Tecnología</span>
+                        </div>
+                        <h3 class="proyecto-title">Ciclo de talleres en el CCD</h3>
+                        <p class="proyecto-desc">En este espacio se presentaron bibliotecas personalizadas de personas
+                            que practican la programación al vuelo o live coding.</p>
+                    </div>
+                </div>
+
+                <div class="proyecto-card">
+                    <div class="proyecto-no-img"><span>&lt;*(((-{</span></div>
+                    <div class="proyecto-body">
+                        <div class="proyecto-tags">
+                            <span class="proyecto-tag">Educación</span>
+                            <span class="proyecto-tag">Tecnología</span>
+                        </div>
+                        <h3 class="proyecto-title">Pedagogías interdisciplinares en las artes</h3>
+                        <p class="proyecto-desc">Estos espacios han servido como motivos para poner en práctica el
+                            trabajo experimental por proyectos.</p>
+                    </div>
+                </div>
+
+                <div class="proyecto-card">
+                    <img class="proyecto-img" src="https://piranhalab.cc/img/profeticas-r.png"
+                        alt="El navegador como lienzo">
+                    <div class="proyecto-body">
+                        <div class="proyecto-tags">
+                            <span class="proyecto-tag">Arte</span>
+                            <span class="proyecto-tag">Educación</span>
+                        </div>
+                        <h3 class="proyecto-title">El navegador como lienzo</h3>
+                        <p class="proyecto-desc">El navegador como tecnología nos ha permitido desarrollar proyectos
+                            audiovisuales experimentales de manera accesible.</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
-      </div>
+    </section>
 
-      <div class="proyecto-card">
-        <div class="proyecto-no-img"><span>&lt;*(((-{</span></div>
-        <div class="proyecto-body">
-          <div class="proyecto-tags">
-            <span class="proyecto-tag">Arte</span>
-            <span class="proyecto-tag">Educación</span>
-          </div>
-          <h3 class="proyecto-title">Medios tecnológicos accesibles</h3>
-          <p class="proyecto-desc">Uso de computadoras de bajo coste, placas de desarrollo y dispositivos móviles accesibles para el aprendizaje.</p>
+    <!-- CONTACTO -->
+    <section id="contacto">
+        <div class="section-inner">
+            <div class="contacto-left">
+                <p class="section-number">04</p>
+                <h2 class="section-title">Contacto</h2>
+                <div class="email-block">
+                    <p class="email-label">Email</p>
+                    <a class="email-link" href="mailto:info@piranhalab.cc">info@piranhalab.cc</a>
+                </div>
+                <p class="contacto-desc">
+                    Laboratorio de experimentación entre arte, tecnología y educación.<br>
+                    piranhalab.cc
+                </p>
+            </div>
+
+
         </div>
-      </div>
+    </section>
 
-      <div class="proyecto-card">
-        <img class="proyecto-img"
-             src="https://piranhalab.cc/img/profeticas-r.png"
-             alt="El navegador como lienzo">
-        <div class="proyecto-body">
-          <div class="proyecto-tags">
-            <span class="proyecto-tag">Arte</span>
-            <span class="proyecto-tag">Educación</span>
-          </div>
-          <h3 class="proyecto-title">El navegador como lienzo</h3>
-          <p class="proyecto-desc">El navegador como tecnología nos ha permitido desarrollar proyectos audiovisuales experimentales de manera accesible.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CONTACTO -->
-<section id="contacto">
-  <div class="section-inner">
-    <div class="contacto-left">
-      <p class="section-number">04</p>
-      <h2 class="section-title">Contacto</h2>
-      <div class="email-block">
-        <p class="email-label">Email</p>
-        <a class="email-link" href="mailto:info@piranhalab.cc">info@piranhalab.cc</a>
-      </div>
-      <p class="contacto-desc">
-        Laboratorio de experimentación entre arte, tecnología y educación.<br>
-        piranhalab.cc
-      </p>
-    </div>
-
-
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">PiranhaLab © — Laboratorio de experimentación</div>
-  <div class="footer-glyph">&lt;*(((-{</div>
-  <div class="footer-right">piranhalab.cc</div>
-</footer>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">PiranhaLab © — Laboratorio de experimentación</div>
+        <div class="footer-glyph">&lt;*(((-{</div>
+        <div class="footer-right">piranhalab.cc</div>
+    </footer>
 
 </body>
+
 </html>

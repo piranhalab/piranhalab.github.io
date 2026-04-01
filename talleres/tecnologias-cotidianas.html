@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecnologías Cotidianas para Documentar el Territorio — PiranhaLab</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+  /* Using system stack as fallback but going for a different feel with custom styling */
+
+  :root {
+    --paper: #f0ebe3;
+    --ink: #111111;
+    --ink-light: #333333;
+    --accent: #111111;
+    --border: #111111;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    /* subtle noise texture */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--border);
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .nav-logo svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-logo img {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+
+  .nav-brand {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  /* ── SECTIONS GENERAL ── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 8rem;
+    max-width: 100%;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    border-bottom: 1.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1.5px;
+    background: var(--ink);
+    opacity: 0.4;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 10vw, 9rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    max-width: 14ch;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    opacity: 0.6;
+    max-width: 42ch;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .hero-meta-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  .hero-meta-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  /* decorative fish glyph */
+  .hero-glyph {
+    position: absolute;
+    bottom: 3rem;
+    right: 5vw;
+    font-size: 5rem;
+    opacity: 0.08;
+    letter-spacing: -0.1em;
+    font-weight: 900;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* wave decoration */
+  .wave-deco {
+    position: absolute;
+    top: 4rem;
+    right: 6vw;
+    opacity: 0.12;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-number {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 2.5rem;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1.5px solid var(--border);
+    margin: 0;
+  }
+
+  /* ── MARCO CONCEPTUAL ── */
+  #marco {
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .concepto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .concepto-cell {
+    padding: 2rem;
+    border-right: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .concepto-cell:nth-child(even) { border-right: none; }
+  .concepto-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .concepto-cell h3 {
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+
+  .concepto-cell p {
+    font-size: 0.88rem;
+    opacity: 0.65;
+    line-height: 1.6;
+  }
+
+  .statement-block {
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .statement-block p {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .statement-block .statement-sub {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    margin-top: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── PREGUNTAS ── */
+  #preguntas {
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .preguntas-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+
+  .preguntas-list li {
+    padding: 1.8rem 0;
+    border-bottom: 1.5px solid rgba(17,17,17,0.15);
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 700;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .preguntas-list li:last-child { border-bottom: none; }
+
+  .pregunta-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 0.35;
+    padding-top: 0.4rem;
+    flex-shrink: 0;
+    width: 2rem;
+    text-transform: uppercase;
+  }
+
+  /* ── EJERCICIO ── */
+  #ejercicio {
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .ejercicio-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .ejercicio-col {
+    padding: 2.5rem;
+  }
+
+  .ejercicio-col:first-child {
+    border-right: 1.5px solid var(--border);
+  }
+
+  .ejercicio-col h3 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .ejercicio-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border: 1.5px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .tag:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .formato-list {
+    list-style: none;
+  }
+
+  .formato-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed rgba(17,17,17,0.2);
+    font-size: 0.88rem;
+    opacity: 0.7;
+  }
+
+  .formato-list li:last-child { border-bottom: none; }
+
+  .formato-list li::before {
+    content: '→ ';
+    font-weight: 700;
+    opacity: 0.4;
+  }
+
+  /* ── ARCHIVO ── */
+  #archivo {
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .archivo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1.5px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .archivo-item {
+    padding: 2rem 1.5rem;
+    border-right: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    transition: background 0.15s, color 0.15s;
+    cursor: default;
+  }
+
+  .archivo-item:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .archivo-item:nth-child(4n) { border-right: none; }
+  .archivo-item:nth-last-child(-n+4) { border-bottom: none; }
+
+  .reflexion-block {
+    margin-top: 3rem;
+  }
+
+  .reflexion-q {
+    padding: 1.5rem 0;
+    border-bottom: 1.5px solid rgba(17,17,17,0.15);
+    font-size: 1.05rem;
+    opacity: 0.7;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .reflexion-q::before {
+    content: '?';
+    font-weight: 900;
+    font-size: 0.9rem;
+    opacity: 0.3;
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+  }
+
+  /* ── QUIÉNES SOMOS ── */
+  #quienes {
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .personas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .persona-card {
+    padding: 2.5rem;
+  }
+
+  .persona-card:first-child {
+    border-right: 1.5px solid var(--border);
+  }
+
+  .persona-role {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .persona-name {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .persona-web {
+    font-size: 0.78rem;
+    font-weight: 700;
+    opacity: 0.4;
+    text-transform: lowercase;
+    text-decoration: none;
+    color: var(--ink);
+    transition: opacity 0.2s;
+  }
+
+  .persona-web:hover { opacity: 1; }
+
+  .persona-separator {
+    width: 2rem;
+    height: 1.5px;
+    background: var(--ink);
+    opacity: 0.3;
+    margin: 1rem 0;
+  }
+
+  .persona-contact {
+    font-size: 0.78rem;
+    opacity: 0.55;
+    line-height: 1.8;
+  }
+
+  .persona-contact a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(17,17,17,0.2);
+  }
+
+  .persona-contact a:hover {
+    border-bottom-color: var(--ink);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1.5px solid var(--border);
+    padding: 2.5rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-lab {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  .footer-glyph {
+    font-size: 1.2rem;
+    opacity: 0.25;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    opacity: 0.4;
+    transition: opacity 0.2s;
+  }
+
+  .footer-links a:hover { opacity: 1; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 4rem 1.2rem; }
+    #hero { padding-left: 1.2rem; padding-right: 1.2rem; }
+
+    .concepto-grid,
+    .personas-grid { grid-template-columns: 1fr; }
+    .concepto-cell:nth-child(even) { border-right: 1.5px solid var(--border); }
+    .persona-card:first-child { border-right: none; border-bottom: 1.5px solid var(--border); }
+
+    .ejercicio-cols { grid-template-columns: 1fr; }
+    .ejercicio-col:first-child { border-right: none; border-bottom: 1.5px solid var(--border); }
+
+    .archivo-grid { grid-template-columns: repeat(2, 1fr); }
+    .archivo-item:nth-child(4n) { border-right: 1.5px solid var(--border); }
+    .archivo-item:nth-child(2n) { border-right: none; }
+    .archivo-item:nth-last-child(-n+4) { border-bottom: 1.5px solid var(--border); }
+    .archivo-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">
+    <img src="../img/plab-logo.png" alt="PiranhaLab Logo">
+    <span class="nav-brand">Piranha<br>Lab</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#marco">Marco</a></li>
+    <li><a href="#ejercicio">Ejercicio</a></li>
+    <li><a href="#archivo">Archivo</a></li>
+    <li><a href="#quienes">Nosotrxs</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- wave decoration -->
+  <div class="wave-deco">
+    <svg width="200" height="80" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 20 Q25 5 50 20 Q75 35 100 20 Q125 5 150 20 Q175 35 200 20" stroke="#111" stroke-width="1.5" fill="none"/>
+      <path d="M0 40 Q25 25 50 40 Q75 55 100 40 Q125 25 150 40 Q175 55 200 40" stroke="#111" stroke-width="1.5" fill="none"/>
+      <path d="M0 60 Q25 45 50 60 Q75 75 100 60 Q125 45 150 60 Q175 75 200 60" stroke="#111" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <p class="hero-tag fade-in">Reunión Nacional de Cultura Infantil 2026 — Alas y Raíces — Puebla</p>
+  <h1 class="hero-title fade-in delay-1">Tecnologías Cotidianas para Documentar el Territorio</h1>
+  <p class="hero-sub fade-in delay-2">Un taller-laboratorio para promotores culturales que trabajan con infancias y juventudes. Exploramos cómo las herramientas de todos los días pueden convertirse en instrumentos de registro, memoria y creación.</p>
+
+  <div class="hero-meta fade-in delay-3">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Organiza</span>
+      <span class="hero-meta-value">PiranhaLab</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Modalidad</span>
+      <span class="hero-meta-value">Taller-Laboratorio</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Dirigido a</span>
+      <span class="hero-meta-value">Promotores culturales</span>
+    </div>
+  </div>
+
+  <div class="hero-glyph">&lt;*(((-{</div>
+</section>
+
+<!-- MARCO CONCEPTUAL -->
+<section id="marco">
+  <p class="section-number">01 — Marco conceptual</p>
+  <h2 class="section-title">¿Qué es tecnología?</h2>
+
+  <div class="concepto-grid">
+    <div class="concepto-cell">
+      <h3>Digitalizar</h3>
+      <p>Fotografiar un apunte, grabar una voz, escanear una receta. Lo físico pasa a vivir en nuevos soportes.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Materializar</h3>
+      <p>Imprimir un archivo, escuchar un audio con bocinas. Lo digital regresa al mundo sensible.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Tránsito en dos sentidos</h3>
+      <p>Analógico y digital no se oponen. Conviven, se alimentan, se transforman entre sí constantemente.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Tecnología cotidiana</h3>
+      <p>El teléfono, el cuaderno, la voz. Herramientas que ya están en manos de tus alumnas, alumnos y alumnes.</p>
+    </div>
+  </div>
+
+  <div class="statement-block">
+    <p>Documentar es una práctica creativa y política.</p>
+    <p class="statement-sub">Elegir qué registrar, cómo y para quién no es neutral.</p>
+  </div>
+</section>
+
+<!-- PREGUNTAS DETONADORAS -->
+<section id="preguntas">
+  <p class="section-number">02 — Apertura</p>
+  <h2 class="section-title">Preguntas que abren el taller</h2>
+
+  <ul class="preguntas-list">
+    <li>
+      <span class="pregunta-num">A</span>
+      ¿Con qué tecnologías trabajas cotidianamente, en tu vida personal y en tu trabajo con infancias y juventudes?
+    </li>
+    <li>
+      <span class="pregunta-num">B</span>
+      ¿En qué piensas cuando piensas en la palabra <em>tecnología</em>?
+    </li>
+    <li>
+      <span class="pregunta-num">C</span>
+      ¿Cómo usan el teléfono tus alumnas, alumnos y alumnes? ¿Fotos de apuntes, chats, notas de voz, búsquedas, redes sociales, evasión?
+    </li>
+  </ul>
+</section>
+
+<!-- EJERCICIO DE CAMPO -->
+<section id="ejercicio">
+  <p class="section-number">03 — Ejercicio de campo</p>
+  <h2 class="section-title">Salir a documentar</h2>
+
+  <div class="ejercicio-cols">
+    <div class="ejercicio-col">
+      <h3>¿Qué documentar?</h3>
+      <div class="ejercicio-tags">
+        <span class="tag">flora</span>
+        <span class="tag">fauna</span>
+        <span class="tag">arquitectura</span>
+        <span class="tag">personas</span>
+        <span class="tag">sonidos</span>
+        <span class="tag">texturas</span>
+        <span class="tag">objetos</span>
+        <span class="tag">presencias</span>
+        <span class="tag">lo que sea de tu interés</span>
+      </div>
+    </div>
+    <div class="ejercicio-col">
+      <h3>Formato: al menos dos</h3>
+      <ul class="formato-list">
+        <li>Fotografía + nota escrita</li>
+        <li>Audio + dibujo rápido</li>
+        <li>Lo que tengas a la mano</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="statement-block" style="margin-top:2rem;">
+    <p>Jam analógico</p>
+    <p class="statement-sub">Pon tus materiales en el piso. Circula. Observa. Conversa.</p>
+  </div>
+</section>
+
+<!-- ARCHIVO TECNOAFECTIVO -->
+<section id="archivo">
+  <p class="section-number">04 — Puesta en común</p>
+  <h2 class="section-title">Archivo tecnoafectivo</h2>
+
+  <p style="opacity:0.6; max-width:50ch; line-height:1.6; margin-bottom:1rem; font-size:0.9rem;">
+    ¿Cómo adaptarías esta experiencia a tu contexto? ¿Con qué grupo, en qué espacio, con qué variaciones y narrativa?
+  </p>
+
+  <div class="archivo-grid">
+    <div class="archivo-item">Cartografía</div>
+    <div class="archivo-item">Inventario</div>
+    <div class="archivo-item">Bitácora</div>
+    <div class="archivo-item">Bestiario</div>
+    <div class="archivo-item">Herbario</div>
+    <div class="archivo-item">Registro de presencias</div>
+    <div class="archivo-item">Oráculo</div>
+    <div class="archivo-item">Acervo multimedia</div>
+  </div>
+
+  <div class="reflexion-block">
+    <h3 style="font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; margin-bottom:0.5rem;">Reflexión colectiva</h3>
+    <div class="reflexion-q">¿Qué descubriste que no esperabas?</div>
+    <div class="reflexion-q">¿Qué patrones ves entre todos los registros?</div>
+    <div class="reflexion-q">¿Qué preguntas te generó?</div>
+  </div>
+</section>
+
+<!-- QUIÉNES SOMOS -->
+<section id="quienes">
+  <p class="section-number">05 — Nosotrxs</p>
+  <h2 class="section-title">PiranhaLab</h2>
+  <p style="opacity:0.6; max-width:55ch; line-height:1.65; margin-bottom:2rem; font-size:0.9rem;">
+    Laboratorio de experimentación entre arte, tecnología y educación.
+  </p>
+
+  <div class="personas-grid">
+    <div class="persona-card">
+      <p class="persona-role">Co-fundadora · Gestión / Programación</p>
+      <h3 class="persona-name">Marianne Teixido</h3>
+      <a class="persona-web" href="https://teixido.cc" target="_blank" rel="noopener">teixido.cc ↗</a>
+      <div class="persona-separator"></div>
+      <div class="persona-contact">
+        <a href="mailto:marianne.teixido@gmail.com">marianne.teixido@gmail.com</a><br>
+        @marianneteixido
+      </div>
+    </div>
+    <div class="persona-card">
+      <p class="persona-role">Co-fundador · Gestión / Programación</p>
+      <h3 class="persona-name">Emilio Ocelotl</h3>
+      <a class="persona-web" href="https://ocelotl.cc" target="_blank" rel="noopener">ocelotl.cc ↗</a>
+      <div class="persona-separator"></div>
+      <div class="persona-contact">
+        <a href="mailto:emilio.ocelotl@gmail.com">emilio.ocelotl@gmail.com</a><br>
+        @emiliocelotl
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-lab">PiranhaLab · piranhalab.cc</div>
+  <div class="footer-glyph">&lt;*(((-{</div>
+  <ul class="footer-links">
+    <li><a href="mailto:info@piranhalab.cc">Contacto</a></li>
+    <li><a href="https://piranhalab.cc" target="_blank" rel="noopener">Web</a></li>
+    <li><a href="#">@piranhalab</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
