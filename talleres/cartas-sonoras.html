@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartas Sonoras — PiranhaLab</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+
+  :root {
+    --paper: #f0ebe3;
+    --ink: #111111;
+    --ink-light: #333333;
+    --accent: #111111;
+    --border: #111111;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--border);
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none; color: var(--ink);
+  }
+
+  .nav-logo img { height: 32px; width: 32px; object-fit: contain; }
+
+  .nav-brand {
+    font-size: 0.75rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase; line-height: 1.2;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+  .nav-links a {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; color: var(--ink);
+    opacity: 0.5; transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: 8rem;
+    max-width: 100%; padding-left: 5vw; padding-right: 5vw;
+    border-bottom: 1.5px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.5; margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: ''; display: inline-block;
+    width: 2rem; height: 1.5px;
+    background: var(--ink); opacity: 0.4;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 10vw, 9rem);
+    font-weight: 900; line-height: 0.92;
+    letter-spacing: -0.03em; text-transform: uppercase;
+    max-width: 14ch; margin-bottom: 2.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1rem; opacity: 0.6;
+    max-width: 42ch; line-height: 1.6; margin-bottom: 3rem;
+  }
+
+  .hero-meta { display: flex; gap: 3rem; flex-wrap: wrap; }
+
+  .hero-meta-item { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .hero-meta-label {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.4;
+  }
+
+  .hero-meta-value { font-size: 0.9rem; font-weight: 700; }
+
+  .hero-glyph {
+    position: absolute; bottom: 3rem; right: 5vw;
+    font-size: 5rem; opacity: 0.08;
+    letter-spacing: -0.1em; font-weight: 900;
+    user-select: none; pointer-events: none;
+  }
+
+  /* wave decoration */
+  .wave-deco {
+    position: absolute; top: 4rem; right: 6vw; opacity: 0.12;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-number {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.35; margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900; line-height: 1;
+    text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 2.5rem;
+  }
+
+  /* ── BORDERS ── */
+  #apertura, #escucha, #herramientas, #composicion, #etica, #cierre {
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  /* ── CONCEPTO GRID ── */
+  .concepto-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; border: 1.5px solid var(--border); margin-top: 2rem;
+  }
+
+  .concepto-cell {
+    padding: 2rem;
+    border-right: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  .concepto-cell:nth-child(even) { border-right: none; }
+  .concepto-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+  .concepto-cell {
+    cursor: default;
+  }
+
+  .concepto-cell h3 {
+    font-size: 1rem; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem;
+  }
+
+  .concepto-cell p {
+    font-size: 0.88rem; line-height: 1.6;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .concepto-cell:hover p { opacity: 0.65; }
+
+  /* ── EJEMPLO PLACEHOLDER ── */
+  .ejemplo-audio {
+    margin-top: 2rem;
+    border: 1.5px solid var(--border);
+    padding: 2rem;
+  }
+
+  .ejemplo-audio-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    margin-bottom: 1.2rem;
+  }
+
+  .audio-player {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  .audio-btn {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    background: none; border: 1.5px solid var(--border);
+    padding: 0.45rem 1rem; cursor: pointer;
+    color: var(--ink); transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .audio-btn:hover { background: var(--ink); color: var(--paper); }
+
+  .audio-progress-wrap {
+    flex: 1; height: 1.5px;
+    background: rgba(17,17,17,0.2);
+    cursor: pointer; position: relative;
+  }
+
+  .audio-progress {
+    height: 100%; background: var(--ink); width: 0%;
+  }
+
+  .audio-time {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.08em; opacity: 0.4; flex-shrink: 0;
+  }
+
+  .pregunta-central {
+    margin-top: 2rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    opacity: 0.75;
+    max-width: 38ch;
+  }
+
+  /* ── STATEMENT BLOCK ── */
+  .statement-block {
+    margin-top: 3rem; padding: 2.5rem;
+    background: var(--ink); color: var(--paper);
+  }
+
+  .statement-block p {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 700; line-height: 1.35; letter-spacing: -0.01em;
+  }
+
+  .statement-block .statement-sub {
+    font-size: 0.8rem; opacity: 0.5; margin-top: 0.75rem;
+    font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  /* ── PREGUNTAS LIST ── */
+  .preguntas-list { list-style: none; margin-top: 2rem; }
+
+  .preguntas-list li {
+    padding: 1.8rem 0;
+    border-bottom: 1.5px solid rgba(17,17,17,0.15);
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 700;
+    display: flex; align-items: flex-start; gap: 1.5rem;
+  }
+
+  .preguntas-list li:last-child { border-bottom: none; }
+
+  .pregunta-num {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; opacity: 0.35;
+    padding-top: 0.4rem; flex-shrink: 0; width: 2rem; text-transform: uppercase;
+  }
+
+  /* ── EJERCICIO COLS ── */
+  .ejercicio-cols {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; border: 1.5px solid var(--border); margin-top: 2rem;
+  }
+
+  .ejercicio-col { padding: 2.5rem; }
+
+  .ejercicio-col:first-child { border-right: 1.5px solid var(--border); }
+
+  .ejercicio-col h3 {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.5; margin-bottom: 1.5rem;
+  }
+
+  .ejercicio-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .tag {
+    display: inline-block; padding: 0.4rem 0.9rem;
+    border: 1.5px solid var(--border);
+    font-size: 0.78rem; font-weight: 700;
+    text-transform: lowercase; letter-spacing: 0.02em;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .tag:hover { background: var(--ink); color: var(--paper); }
+
+  .formato-list { list-style: none; }
+
+  .formato-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed rgba(17,17,17,0.2);
+    font-size: 0.88rem; opacity: 0.7;
+  }
+
+  .formato-list li:last-child { border-bottom: none; }
+
+  .formato-list li::before { content: '→ '; font-weight: 700; opacity: 0.4; }
+
+  /* ── MODOS GRID (3 cols) ── */
+  .modos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border: 1.5px solid var(--border); margin-top: 2rem;
+  }
+
+  .modo-col {
+    padding: 2.5rem;
+    border-right: 1.5px solid var(--border);
+  }
+
+  .modo-col:last-child { border-right: none; }
+
+  .modo-col {
+    cursor: default;
+  }
+
+  .modo-col h3 {
+    font-size: 1rem; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.75rem;
+  }
+
+  .modo-col p {
+    font-size: 0.85rem; line-height: 1.65; margin-bottom: 0.5rem;
+    opacity: 0; transition: opacity 0.35s ease;
+  }
+
+  .modo-col:hover p { opacity: 0.65; }
+  .modo-col:hover .modo-app { opacity: 0.4; }
+
+  .modo-col .modo-app {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    opacity: 0; margin-top: 1rem; transition: opacity 0.35s ease;
+  }
+
+  /* ── ARCHIVO GRID ── */
+  .archivo-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; border: 1.5px solid var(--border); margin-top: 2rem;
+  }
+
+  .archivo-item {
+    padding: 2rem 1.5rem;
+    border-right: 1.5px solid var(--border);
+    border-bottom: 1.5px solid var(--border);
+    font-size: 0.95rem; font-weight: 700;
+    text-align: center;
+    transition: background 0.15s, color 0.15s;
+    cursor: default;
+  }
+
+  .archivo-item:hover { background: var(--ink); color: var(--paper); }
+  .archivo-item:nth-child(4n) { border-right: none; }
+  .archivo-item:nth-last-child(-n+4) { border-bottom: none; }
+
+  /* ── REFLEXION BLOCK ── */
+  .reflexion-block { margin-top: 3rem; }
+
+  .reflexion-q {
+    padding: 1.5rem 0;
+    border-bottom: 1.5px solid rgba(17,17,17,0.15);
+    font-size: 1.05rem; opacity: 0.7;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+
+  .reflexion-q::before {
+    content: '?'; font-weight: 900; font-size: 0.9rem;
+    opacity: 0.3; flex-shrink: 0; padding-top: 0.1rem;
+  }
+
+  /* ── VARIANTES TABLE ── */
+  .variantes-wrap { margin-top: 2rem; overflow-x: auto; }
+
+  .variantes-table {
+    width: 100%; border-collapse: collapse;
+    border: 1.5px solid var(--border);
+  }
+
+  .variantes-table th {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0.45; padding: 1rem 1.5rem; text-align: left;
+    border-bottom: 1.5px solid var(--border);
+    border-right: 1.5px solid var(--border);
+  }
+
+  .variantes-table th:last-child { border-right: none; }
+
+  .variantes-table td {
+    padding: 1.2rem 1.5rem; font-size: 0.88rem;
+    border-bottom: 1.5px solid rgba(17,17,17,0.15);
+    border-right: 1.5px solid rgba(17,17,17,0.15);
+    vertical-align: top; line-height: 1.5;
+  }
+
+  .variantes-table td:first-child { font-weight: 700; }
+  .variantes-table td:last-child { border-right: none; opacity: 0.7; }
+  .variantes-table tr:last-child td { border-bottom: none; }
+
+  .variantes-table tr:hover td { background: rgba(17,17,17,0.04); }
+
+  /* ── PRINCIPIOS LIST ── */
+  .principios-list { list-style: none; margin-top: 2rem; border: 1.5px solid var(--border); }
+
+  .principio-item {
+    display: grid; grid-template-columns: 4rem 1fr;
+    border-bottom: 1.5px solid var(--border);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .principio-item:last-child { border-bottom: none; }
+
+  .principio-item:hover { background: var(--ink); color: var(--paper); }
+
+  .principio-num {
+    padding: 1.8rem; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.15em; opacity: 0.35;
+    border-right: 1.5px solid var(--border);
+    display: flex; align-items: flex-start; padding-top: 2rem;
+    text-transform: uppercase;
+  }
+
+  .principio-item:hover .principio-num { border-right-color: rgba(240,235,227,0.3); }
+
+  .principio-body { padding: 1.8rem; }
+
+  .principio-title {
+    font-size: 1rem; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.3rem;
+  }
+
+  .principio-desc { font-size: 0.83rem; line-height: 1.65; opacity: 0; transition: opacity 0.35s ease; }
+  .principio-item:hover .principio-desc { opacity: 0.75; }
+
+  /* ── QUIÉNES ── */
+  #quienes { border-bottom: 1.5px solid var(--border); }
+
+  .personas-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; border: 1.5px solid var(--border); margin-top: 2rem;
+  }
+
+  .persona-card { padding: 2.5rem; }
+  .persona-card:first-child { border-right: 1.5px solid var(--border); }
+
+  .persona-role {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.4; margin-bottom: 0.5rem;
+  }
+
+  .persona-name {
+    font-size: 1.6rem; font-weight: 900;
+    letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+
+  .persona-web {
+    font-size: 0.78rem; font-weight: 700; opacity: 0.4;
+    text-transform: lowercase; text-decoration: none; color: var(--ink);
+    transition: opacity 0.2s;
+  }
+
+  .persona-web:hover { opacity: 1; }
+
+  .persona-separator { width: 2rem; height: 1.5px; background: var(--ink); opacity: 0.3; margin: 1rem 0; }
+
+  .persona-contact { font-size: 0.78rem; opacity: 0.55; line-height: 1.8; }
+
+  .persona-contact a {
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid rgba(17,17,17,0.2);
+  }
+
+  .persona-contact a:hover { border-bottom-color: var(--ink); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1.5px solid var(--border);
+    padding: 2.5rem 5vw;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-lab {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.4;
+  }
+
+  .footer-glyph { font-size: 1.2rem; opacity: 0.25; font-weight: 900; letter-spacing: -0.05em; }
+
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+
+  .footer-links a {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; color: var(--ink); opacity: 0.4; transition: opacity 0.2s;
+  }
+
+  .footer-links a:hover { opacity: 1; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in { opacity: 0; animation: fadeUp 0.6s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.25s; }
+  .delay-3 { animation-delay: 0.4s; }
+  .delay-4 { animation-delay: 0.55s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 0.8rem 1.2rem; }
+    .nav-links { gap: 1rem; }
+    section { padding: 4rem 1.2rem; }
+    #hero { padding-left: 1.2rem; padding-right: 1.2rem; }
+
+    .concepto-grid, .personas-grid { grid-template-columns: 1fr; }
+    .concepto-cell:nth-child(even) { border-right: 1.5px solid var(--border); }
+    .persona-card:first-child { border-right: none; border-bottom: 1.5px solid var(--border); }
+
+    .modos-grid { grid-template-columns: 1fr; }
+    .modo-col { border-right: none; border-bottom: 1.5px solid var(--border); }
+    .modo-col:last-child { border-bottom: none; }
+
+    .ejercicio-cols { grid-template-columns: 1fr; }
+    .ejercicio-col:first-child { border-right: none; border-bottom: 1.5px solid var(--border); }
+
+    .archivo-grid { grid-template-columns: repeat(2, 1fr); }
+    .archivo-item:nth-child(4n) { border-right: 1.5px solid var(--border); }
+    .archivo-item:nth-child(2n) { border-right: none; }
+    .archivo-item:nth-last-child(-n+4) { border-bottom: 1.5px solid var(--border); }
+    .archivo-item:nth-last-child(-n+2) { border-bottom: none; }
+
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">
+    <img src="../img/plab-logo.png" alt="PiranhaLab Logo">
+    <span class="nav-brand">Piranha<br>Lab</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#apertura">Apertura</a></li>
+    <li><a href="#herramientas">Herramientas</a></li>
+    <li><a href="#composicion">Composición</a></li>
+    <li><a href="#etica">Ética</a></li>
+    <li><a href="#quienes">Nosotrxs</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wave-deco">
+    <svg width="200" height="80" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 20 Q25 5 50 20 Q75 35 100 20 Q125 5 150 20 Q175 35 200 20" stroke="#111" stroke-width="1.5" fill="none"/>
+      <path d="M0 40 Q25 25 50 40 Q75 55 100 40 Q125 25 150 40 Q175 55 200 40" stroke="#111" stroke-width="1.5" fill="none"/>
+      <path d="M0 60 Q25 45 50 60 Q75 75 100 60 Q125 45 150 60 Q175 75 200 60" stroke="#111" stroke-width="1.5" fill="none"/>
+    </svg>
+  </div>
+
+  <p class="hero-tag fade-in">Alas y Raíces — Secretaría de Cultura — 6 de mayo de 2026</p>
+  <h1 class="hero-title fade-in delay-1">Cartas Sonoras</h1>
+  <p class="hero-sub fade-in delay-2">Escuchamos, capturamos y componemos juntos con el teléfono.</p>
+
+  <div class="hero-meta fade-in delay-3">
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Imparte</span>
+      <span class="hero-meta-value"><a href="https://ocelotl.cc/" target="_blank" rel="noopener" style="color:var(--ink); text-decoration:none; border-bottom:1.5px solid var(--ink);">Emilio Ocelotl</a></span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Modalidad</span>
+      <span class="hero-meta-value">Videollamada síncrona</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Duración</span>
+      <span class="hero-meta-value">4 horas</span>
+    </div>
+    <div class="hero-meta-item">
+      <span class="hero-meta-label">Herramienta</span>
+      <span class="hero-meta-value">Teléfono celular</span>
+    </div>
+  </div>
+
+  <div class="hero-glyph">&lt;*(((-{</div>
+</section>
+
+<!-- APERTURA -->
+<section id="apertura">
+  <p class="section-number">01 — Apertura (30 min)</p>
+  <h2 class="section-title">Reconocimiento del campo</h2>
+
+  <div style="margin-bottom:2.5rem;">
+    <p style="font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; margin-bottom:1.2rem;">Presentación</p>
+    <ul style="list-style:none; border-top: 1.5px solid rgba(17,17,17,0.15);">
+      <li style="padding:1.2rem 0; border-bottom:1.5px solid rgba(17,17,17,0.15); font-size:clamp(0.95rem,1.8vw,1.15rem); font-weight:700; opacity:0.75;">¿Cómo les gusta que les nombre?</li>
+      <li style="padding:1.2rem 0; border-bottom:1.5px solid rgba(17,17,17,0.15); font-size:clamp(0.95rem,1.8vw,1.15rem); font-weight:700; opacity:0.75;">Contexto donde trabajan</li>
+      <li style="padding:1.2rem 0; font-size:clamp(0.95rem,1.8vw,1.15rem); font-weight:700; opacity:0.75;">¿Qué tal el día de hoy?</li>
+    </ul>
+  </div>
+
+  <div style="border: 1.5px solid var(--border); padding: 2rem; margin-bottom: 2.5rem;">
+    <p style="font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; margin-bottom:1rem;">Origen del método</p>
+    <p style="font-size:0.88rem; opacity:0.65; line-height:1.7; max-width:62ch;">Este taller crece de varios lugares: las clases de <em>Código creativo</em> y <em>Narrativa sonora</em> en CENTRO, el trabajo en el Observatorio de Cultura e Innovación (OCI) del CENART, y los talleres de PiranhaLab. No es un método cerrado — es una síntesis en curso.</p>
+  </div>
+
+  <div class="concepto-grid">
+    <div class="concepto-cell">
+      <h3>¿Qué es una carta sonora?</h3>
+      <p>Un audio ambiental, una imagen, una frase breve. Algo que no cabe en palabras escritas. No requiere voz ni revelar identidad.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Cartas al futuro</h3>
+      <p>¿Cuándo funciona? ¿Qué les cuesta más a las personas adolescentes? ¿Qué se queda sin decir?</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>El sonido detiene el tiempo</h3>
+      <p>Igual que la carta escrita. La carta sonora abre ese gesto al espacio que las rodea: el edificio, el viento, el silencio de este lugar.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Estas cuatro horas</h3>
+      <p>Escuchar, capturar y componer juntos. Hablar de ética y de restricciones. Ensayar el método para llevarlo al propio contexto.</p>
+    </div>
+  </div>
+
+  <div class="ejemplo-audio">
+    <p class="ejemplo-audio-label">Paisaje sonoro — ejemplo</p>
+    <audio id="csAudio">
+      <source src="../snd/paisaje-sonoro.mp3" type="audio/mpeg">
+    </audio>
+    <div class="audio-player">
+      <button class="audio-btn" id="csPlayBtn">Play</button>
+      <div class="audio-progress-wrap" id="csProgressWrap">
+        <div class="audio-progress" id="csProgress"></div>
+      </div>
+      <span class="audio-time" id="csTime">0:00</span>
+    </div>
+  </div>
+
+  <p class="pregunta-central">¿Qué podría sonar de una carta a tu yo del futuro que no cabe en las palabras escritas?</p>
+
+  <div class="statement-block">
+    <p>La voz no es el único canal.</p>
+    <p class="statement-sub">El formato es la protección que el método construye desde adentro.</p>
+  </div>
+</section>
+
+<!-- ESCUCHA -->
+<section id="escucha">
+  <p class="section-number">02 — Escucha (20 min)</p>
+  <h2 class="section-title">Ejercicio de escucha</h2>
+
+  <p style="opacity:0.6; max-width:50ch; line-height:1.6; font-size:0.9rem;">
+    Tres minutos. Cámara apagada, ojos cerrados. Elegir un espacio para estar. Escuchar el entorno sin nombrarlo todavía.
+  </p>
+
+  <ul class="preguntas-list">
+    <li>
+      <span class="pregunta-num">1</span>
+      Un sonido cercano
+    </li>
+    <li>
+      <span class="pregunta-num">2</span>
+      Un sonido lejano
+    </li>
+    <li>
+      <span class="pregunta-num">3</span>
+      Un sonido que no habías notado
+    </li>
+  </ul>
+</section>
+
+<!-- HERRAMIENTAS -->
+<section id="herramientas">
+  <p class="section-number">03 — Herramientas (40 min)</p>
+  <h2 class="section-title">El teléfono como herramienta de campo</h2>
+
+  <div class="modos-grid">
+    <div class="modo-col">
+      <h3>Imagen</h3>
+      <p>Texturas, objetos, espacios, luz. Sin personas.</p>
+      <p>El encuadre decide qué entra y qué queda fuera. ¿Qué ángulo revela algo que no se ve de pie?</p>
+      <p class="modo-app">App: cámara nativa o WhatsApp</p>
+    </div>
+    <div class="modo-col">
+      <h3>Paisaje sonoro</h3>
+      <p>El teléfono quieto sobre una superficie, sin hablar. 10 a 20 segundos.</p>
+      <p>Lo que suena cuando no hay voz: el edificio, el tráfico, el viento, el silencio de este lugar.</p>
+      <p>Distancia y posición cambian lo que entra.</p>
+      <p class="modo-app">App: grabadora nativa o WhatsApp</p>
+    </div>
+    <div class="modo-col">
+      <h3>Texto</h3>
+      <p>Una frase breve, una instrucción, algo que no entra en foto ni en audio.</p>
+      <p>Es un elemento por sí mismo, no un título ni una descripción de archivo.</p>
+      <p class="modo-app">App: bloc de notas nativo o WhatsApp</p>
+    </div>
+  </div>
+
+  <div class="statement-block" style="margin-top:2rem;">
+    <p>Mini-ejercicio — 15 minutos</p>
+    <p class="statement-sub">Una imagen · Un audio ambiental sin hablar · Una frase. Cámara y micrófono apagados durante la captura. Guardar los tres elementos para el siguiente momento.</p>
+  </div>
+</section>
+
+<!-- DESCANSO -->
+<div style="border-bottom: 1.5px solid var(--border); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+  <span style="font-size: clamp(2.5rem, 8vw, 6rem); font-weight:900; letter-spacing:-0.04em; text-transform:uppercase; opacity:0.12; line-height:1;">Descanso</span>
+  <span style="font-size:0.72rem; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; opacity:0.35;">15 minutos</span>
+</div>
+
+<!-- COMPOSICIÓN -->
+<section id="composicion">
+  <p class="section-number">04 — Composición y escucha colectiva (70 min)</p>
+  <h2 class="section-title">El pizarrón colectivo</h2>
+
+  <p style="opacity:0.6; max-width:52ch; line-height:1.6; margin-bottom:2.5rem; font-size:0.9rem;">
+    El grupo ensambla sus capturas. Quien facilita arma en pantalla compartida mientras el grupo decide en tiempo real. No hay forma correcta: puede parecerse a un mapa, a instrucciones, a una secuencia.
+  </p>
+
+  <div class="ejercicio-cols">
+    <div class="ejercicio-col">
+      <h3>Cómo compartir tus capturas</h3>
+      <ul class="formato-list">
+        <li>Correo: <a href="mailto:piranha.laboratorio@gmail.com" style="color:var(--ink);">piranha.laboratorio@gmail.com</a></li>
+        <li>Drive: <a href="https://drive.google.com/drive/u/1/folders/1i5dqVnhbfVBBvCH59R8kCcXk8cFi4CJH" target="_blank" rel="noopener" style="color:var(--ink);">carpeta compartida ↗</a></li>
+        <li>Zoom o WhatsApp — compartir directamente en la sesión</li>
+      </ul>
+    </div>
+    <div class="ejercicio-col">
+      <h3>Herramienta</h3>
+      <ul class="formato-list">
+        <li><a href="https://padlet.com/emilio_ocelotl/cartas-sonoras-azly367s4vg4wh5c" target="_blank" rel="noopener" style="color:var(--ink);">Padlet ↗</a> — funciona con imágenes, audio y texto</li>
+        <li>No es la única opción</li>
+        <li>El pizarrón puede ser completamente analógico</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="pregunta-central" style="margin-top:2.5rem;">¿A quién va este pizarrón colectivo?</p>
+
+  <div class="archivo-grid">
+    <div class="archivo-item">¿Al yo futuro del grupo?</div>
+    <div class="archivo-item">¿A los adolescentes con quienes trabajan?</div>
+    <div class="archivo-item">¿A nadie en particular?</div>
+    <div class="archivo-item">Sin destino decidido</div>
+  </div>
+
+  <div class="reflexion-block" style="margin-top:8rem; margin-bottom:6rem;">
+    <h3 style="font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; margin-bottom:0.5rem;">Preguntas para el pizarrón que hicimos</h3>
+    <div class="reflexion-q">¿Qué permitió decir el formato sonoro que no diría la carta escrita?</div>
+    <div class="reflexion-q">¿Qué decisiones tomaron sin pensar: el lugar, el encuadre, el tono?</div>
+    <div class="reflexion-q">¿Cómo traducirías esto a tu grupo? ¿Qué adaptarías?</div>
+    <div class="reflexion-q">¿Qué puede llevarse cada adolescente de este ejercicio? ¿Qué le pertenece? ¿Qué queda en el grupo?</div>
+  </div>
+</section>
+
+<!-- ÉTICA -->
+<section id="etica">
+  <p class="section-number">05 — Ética y restricciones (35 min)</p>
+  <h2 class="section-title">Expresión artística y trabajo bajo restricciones</h2>
+
+  <div class="concepto-grid">
+    <div class="concepto-cell">
+      <h3>Expresión artística vs. testimonio</h3>
+      <p>El facilitador acompaña un gesto creativo, no recopila historias. Cuando la carta se acerca al testimonio, el facilitador lo nota y redirige.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Voluntariedad</h3>
+      <p>Escuchar sin grabar es participar. Contribuir solo con texto es participar. Eso tiene que quedar claro desde el inicio.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>El formato como cuidado</h3>
+      <p>Sin voz no es una limitación: es la protección que el método construye desde adentro. Se lo explicamos a los adolescentes como cuidado, no como prohibición.</p>
+    </div>
+    <div class="concepto-cell">
+      <h3>Flujo de información</h3>
+      <p>¿Qué puede circular dentro del espacio de trabajo? ¿En qué forma y con qué resguardo? ¿Qué queda en el dispositivo? ¿Qué queda con el facilitador?</p>
+    </div>
+  </div>
+
+  <div class="variantes-wrap">
+    <table class="variantes-table">
+      <thead>
+        <tr>
+          <th>Condición</th>
+          <th>Variante</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Con teléfono y conexión</td>
+          <td>El ejercicio completo</td>
+        </tr>
+        <tr>
+          <td>Con teléfono sin conexión</td>
+          <td>Captura local — el pizarrón colectivo existe en el dispositivo</td>
+        </tr>
+        <tr>
+          <td>Sin teléfono, con papel</td>
+          <td>Pizarrón sobre papel — instrucciones dibujadas, collage, composición sobre el piso</td>
+        </tr>
+        <tr>
+          <td>Sin ningún dispositivo</td>
+          <td>Escucha dirigida y descripción oral — el pizarrón existió y se fue</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section id="cierre">
+  <p class="section-number">06 — Cierre (30 min)</p>
+  <h2 class="section-title">Principios del método</h2>
+
+  <ul class="principios-list">
+    <li class="principio-item">
+      <span class="principio-num">1</span>
+      <div class="principio-body">
+        <h3 class="principio-title">Escucha antes que captura</h3>
+        <p class="principio-desc">Tres minutos de escucha antes de tocar el teléfono.</p>
+      </div>
+    </li>
+    <li class="principio-item">
+      <span class="principio-num">2</span>
+      <div class="principio-body">
+        <h3 class="principio-title">Mínima tecnología, máxima intención</h3>
+        <p class="principio-desc">Solo apps nativas del teléfono. El gesto importa más que la herramienta.</p>
+      </div>
+    </li>
+    <li class="principio-item">
+      <span class="principio-num">3</span>
+      <div class="principio-body">
+        <h3 class="principio-title">El silencio también es contenido</h3>
+        <p class="principio-desc">Lo que suena cuando no hay voz. Lo que no se dice también forma parte de la carta.</p>
+      </div>
+    </li>
+    <li class="principio-item">
+      <span class="principio-num">4</span>
+      <div class="principio-body">
+        <h3 class="principio-title">La voz no es el único canal</h3>
+        <p class="principio-desc">Imagen, audio ambiental y texto son elementos por sí mismos. Ninguno necesita explicación.</p>
+      </div>
+    </li>
+    <li class="principio-item">
+      <span class="principio-num">5</span>
+      <div class="principio-body">
+        <h3 class="principio-title">Lo colectivo transforma</h3>
+        <p class="principio-desc">El pizarrón no es la suma de capturas individuales. Es algo que solo existe cuando el grupo decide juntos.</p>
+      </div>
+    </li>
+    <li class="principio-item">
+      <span class="principio-num">6</span>
+      <div class="principio-body">
+        <h3 class="principio-title">El destino es decisión del grupo</h3>
+        <p class="principio-desc">¿A quién va el pizarrón? La apertura también es una posición — no es obligatorio decidir.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="reflexion-block" style="margin-top:4rem; margin-bottom:4rem;">
+    <h3 style="font-size:0.7rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; opacity:0.4; margin-bottom:0.5rem;">El archivo como horizonte</h3>
+    <div class="reflexion-q">Lo que compusieron hoy ya existe en el Padlet — eso es el archivo.</div>
+    <div class="reflexion-q">Los pizarrones colectivos que hagan con sus grupos pueden vivir ahí también.</div>
+    <div class="reflexion-q" style="border-bottom:none;">El gesto de componer juntos puede empezar hoy.</div>
+  </div>
+
+  <div class="statement-block">
+    <p>Una variante para activar con tu grupo.</p>
+  </div>
+</section>
+
+<!-- REFLEXIONES Y CIERRE -->
+<div style="border-bottom: 1.5px solid var(--border); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+  <span style="font-size: clamp(2.5rem, 8vw, 6rem); font-weight:900; letter-spacing:-0.03em; text-transform:uppercase; opacity:0.12; line-height:1.1; text-align:center;">Reflexiones<br>finales y cierre</span>
+</div>
+
+<!-- QUIÉNES SOMOS -->
+<section id="quienes">
+  <p class="section-number">07 — Nosotrxs</p>
+  <h2 class="section-title">PiranhaLab</h2>
+  <p style="opacity:0.6; max-width:55ch; line-height:1.65; margin-bottom:2rem; font-size:0.9rem;">
+    Laboratorio de experimentación entre arte, tecnología y educación.
+  </p>
+
+  <div class="personas-grid">
+    <div class="persona-card">
+      <p class="persona-role">Facilitador</p>
+      <h3 class="persona-name">Emilio Ocelotl</h3>
+      <a class="persona-web" href="https://ocelotl.cc" target="_blank" rel="noopener">ocelotl.cc ↗</a>
+      <div class="persona-separator"></div>
+      <div class="persona-contact">
+        <a href="mailto:emilio.ocelotl@gmail.com">emilio.ocelotl@gmail.com</a><br>
+        @emiliocelotl
+      </div>
+    </div>
+    <div class="persona-card">
+      <p class="persona-role">Co-fundadora · PiranhaLab</p>
+      <h3 class="persona-name">Marianne Teixido</h3>
+      <a class="persona-web" href="https://teixido.cc" target="_blank" rel="noopener">teixido.cc ↗</a>
+      <div class="persona-separator"></div>
+      <div class="persona-contact">
+        <a href="mailto:marianne.teixido@gmail.com">marianne.teixido@gmail.com</a><br>
+        @marianneteixido
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-lab">PiranhaLab · piranhalab.cc</div>
+  <div class="footer-glyph">&lt;*(((-{</div>
+  <ul class="footer-links">
+    <li><a href="mailto:info@piranhalab.cc">Contacto</a></li>
+    <li><a href="https://piranhalab.cc" target="_blank" rel="noopener">Web</a></li>
+    <li><a href="#">@piranhalab</a></li>
+  </ul>
+</footer>
+
+<script>
+  const audio = document.getElementById('csAudio');
+  const btn = document.getElementById('csPlayBtn');
+  const progress = document.getElementById('csProgress');
+  const timeDisplay = document.getElementById('csTime');
+  const progressWrap = document.getElementById('csProgressWrap');
+
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  }
+
+  btn.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); btn.textContent = 'Pause'; }
+    else { audio.pause(); btn.textContent = 'Play'; }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      progress.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      timeDisplay.textContent = fmt(audio.currentTime);
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    btn.textContent = 'Play';
+    progress.style.width = '0%';
+    timeDisplay.textContent = '0:00';
+  });
+
+  progressWrap.addEventListener('click', (e) => {
+    const rect = progressWrap.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+  });
+</script>
+</body>
+</html>
